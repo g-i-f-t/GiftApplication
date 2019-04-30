@@ -2,9 +2,6 @@ package kr.ac.jejunu.giftapplication.home;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
@@ -19,6 +16,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import kr.ac.jejunu.giftapplication.GiftApplication;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.home.adapter.FundingViewPagerAdapter;
+import kr.ac.jejunu.giftapplication.home.fragment.AvailableFundingFragment;
+import kr.ac.jejunu.giftapplication.home.fragment.CompleteFundingFragment;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,19 +34,28 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         setDrawerSettings();
         setTabLayout();
+    }
 
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        fundingTableLayout = findViewById(R.id.funding_tab);
+        fundingViewPager = findViewById(R.id.funding_pager);
     }
 
     private void setTabLayout() {
-        fundingTableLayout = findViewById(R.id.funding_tab);
-        fundingViewPager = findViewById(R.id.funding_pager);
-        FundingViewPagerAdapter adapter = new FundingViewPagerAdapter(getSupportFragmentManager());
-        adapter.addPage(new AvailableFundingFragment(), getResources().getString(R.string.availableFunding));
-        adapter.addPage(new CompleteFundingFragment(), getResources().getString(R.string.completeFunding));
+        FundingViewPagerAdapter adapter = setFundingViewPagerAdapter();
         fundingViewPager.setAdapter(adapter);
         fundingViewPager.setPageMargin((int) getResources().getDimension(R.dimen.view_pager_gap));
         fundingViewPager.setOffscreenPageLimit(2);
         fundingTableLayout.setupWithViewPager(fundingViewPager);
+    }
+
+    private FundingViewPagerAdapter setFundingViewPagerAdapter() {
+        FundingViewPagerAdapter adapter = new FundingViewPagerAdapter(getSupportFragmentManager());
+        adapter.addPage(new AvailableFundingFragment(), getResources().getString(R.string.availableFunding));
+        adapter.addPage(new CompleteFundingFragment(), getResources().getString(R.string.completeFunding));
+        return adapter;
     }
 
     private void setDrawerSettings() {
@@ -60,8 +69,12 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        String userInfo = ((GiftApplication) getApplication()).userInfo();
         View headerLayout = navigationView.getHeaderView(0);
+        setUserInfo(headerLayout);
+    }
+
+    private void setUserInfo(View headerLayout) {
+        String userInfo = ((GiftApplication) getApplication()).userInfo();
         TextView userId = headerLayout.findViewById(R.id.user_id);
         userId.setText(userInfo);
     }

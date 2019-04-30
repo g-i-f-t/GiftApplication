@@ -1,4 +1,4 @@
-package kr.ac.jejunu.giftapplication.home;
+package kr.ac.jejunu.giftapplication.home.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.home.CallBackHomeIntent;
 import kr.ac.jejunu.giftapplication.vo.GameVO;
 
-class FundingAdapter extends RecyclerView.Adapter {
+public class FundingAdapter extends RecyclerView.Adapter {
     private final ArrayList<GameVO> fundingList;
     private CallBackHomeIntent callBackHomeIntent;
 

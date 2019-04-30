@@ -1,4 +1,4 @@
-package kr.ac.jejunu.giftapplication.home;
+package kr.ac.jejunu.giftapplication.home.viewmodel;
 
 import java.util.ArrayList;
 import java.util.List;

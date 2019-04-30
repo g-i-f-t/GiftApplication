@@ -1,4 +1,4 @@
-package kr.ac.jejunu.giftapplication.home;
+package kr.ac.jejunu.giftapplication.home.fragment;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -17,17 +17,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.HashMap;
-import java.util.Map;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import kr.ac.jejunu.giftapplication.FileIO;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.gamedetail.GameDetail;
+import kr.ac.jejunu.giftapplication.home.viewmodel.AvailableFundingViewModel;
+import kr.ac.jejunu.giftapplication.home.adapter.FundingAdapter;
 
 public class AvailableFundingFragment extends Fragment {
 
+    private final FileIO fileIO = new FileIO();
     private AvailableFundingViewModel mViewModel;
     private RecyclerView.Adapter fundingAdapter;
     private RecyclerView fundingRecyclerView;
@@ -63,9 +64,11 @@ public class AvailableFundingFragment extends Fragment {
     private void transition(ImageView view, int position) {
         Intent intent = new Intent(getContext(), GameDetail.class);
         HashMap<String, Object> params = new HashMap<>();
+        String fileName = "homeGameImage.png";
         params.put("index", position);
-//        params.put("imageURI", view.getDrawable());
+        params.put("fileName", fileName);
         intent.putExtra("params", params);
+        fileIO.saveImage(view, fileName, getContext());
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptions options = ActivityOptions
                     .makeSceneTransitionAnimation(getActivity(), view, getResources().getString(R.string.funding_game_image));
@@ -75,5 +78,4 @@ public class AvailableFundingFragment extends Fragment {
         }
 
     }
-
 }

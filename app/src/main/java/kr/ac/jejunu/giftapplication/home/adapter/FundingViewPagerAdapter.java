@@ -1,14 +1,13 @@
-package kr.ac.jejunu.giftapplication.home;
+package kr.ac.jejunu.giftapplication.home.adapter;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-class FundingViewPagerAdapter extends FragmentPagerAdapter {
+public class FundingViewPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
 

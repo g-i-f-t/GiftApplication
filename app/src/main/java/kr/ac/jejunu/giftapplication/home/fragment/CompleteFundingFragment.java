@@ -1,4 +1,4 @@
-package kr.ac.jejunu.giftapplication.home;
+package kr.ac.jejunu.giftapplication.home.fragment;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.home.viewmodel.CompleteFundingViewModel;
 
 public class CompleteFundingFragment extends Fragment {
 
