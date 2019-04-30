@@ -9,4 +9,5 @@
     <string name="fundingNow">진행중</string>
     <string name="availableFunding">진행중</string>
     <string name="completeFunding">진행완료</string>
+    <string name="funding_game_image">gameImage</string>
 </resources>
