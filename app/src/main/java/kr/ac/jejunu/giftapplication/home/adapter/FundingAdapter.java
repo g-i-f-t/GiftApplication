@@ -1,3 +1,9 @@
+/**
+ * Author. Aerain
+ * SSLAB
+ * Jeju Nation University.
+ */
+
 package kr.ac.jejunu.giftapplication.home.adapter;
 
 import android.view.LayoutInflater;
@@ -29,21 +35,20 @@ public class FundingAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_funding_layout, parent, false);
-        FundingViewHolder vh = new FundingViewHolder(view);
-        return vh;
+        return new FundingViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((FundingViewHolder) holder).getGameName().setText(fundingList.get(position).getName());
+        FundingViewHolder fundingViewHolder = (FundingViewHolder) holder;
+        fundingViewHolder.getGameName().setText(fundingList.get(position).getName());
         if(position == 0)
-            ((FundingViewHolder) holder).getFundingLayout().setMinHeight(360);
+            fundingViewHolder.getFundingLayout().setMinHeight(360);
         else
-            ((FundingViewHolder) holder).getFundingLayout().setMinHeight(480);
+            fundingViewHolder.getFundingLayout().setMinHeight(480);
 
-        ((FundingViewHolder) holder).getFundingLayout().setOnClickListener(v -> {
-            callBackHomeIntent.callback(((FundingViewHolder) holder).getGameImage(), position);
-        });
+        fundingViewHolder.getFundingLayout().setOnClickListener(v ->
+                callBackHomeIntent.callback(fundingViewHolder.getGameImage(), fundingList.get(position)));
     }
 
     @Override
@@ -55,17 +60,17 @@ public class FundingAdapter extends RecyclerView.Adapter {
         private TextView gameName;
         private ConstraintLayout fundingLayout;
         private ImageView gameImage;
-        public FundingViewHolder(@NonNull View itemView) {
+        FundingViewHolder(@NonNull View itemView) {
             super(itemView);
             gameName = itemView.findViewById(R.id.funding_game_name);
             fundingLayout = itemView.findViewById(R.id.funding_item_layout);
             gameImage = itemView.findViewById(R.id.funding_game_image);
         }
-        public TextView getGameName() { return gameName; }
-        public ConstraintLayout getFundingLayout() {
+        TextView getGameName() { return gameName; }
+        ConstraintLayout getFundingLayout() {
             return fundingLayout;
         }
-        public ImageView getGameImage() {
+        ImageView getGameImage() {
             return gameImage;
         }
     }

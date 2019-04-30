@@ -1,6 +1,8 @@
 package kr.ac.jejunu.giftapplication.vo;
 
-public class GameVO {
+import java.io.Serializable;
+
+public class GameVO implements Serializable {
     private Long gameId;
     private String name;
     private String developer;

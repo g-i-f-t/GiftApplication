@@ -1,3 +1,9 @@
+/**
+ * Author Aerain
+ * SSLAB
+ * Jeju National University
+ */
+
 package kr.ac.jejunu.giftapplication;
 
 import android.content.Context;
@@ -10,10 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileIO {
-    public FileIO() {
-    }
-
-    public void saveImage(ImageView view, String fileName, Context context) {
+    public static void saveImage(ImageView view, String fileName, Context context) {
         Bitmap bitmap = ((BitmapDrawable) view.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);

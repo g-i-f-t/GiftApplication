@@ -1,3 +1,9 @@
+/**
+ * Author. Aerain
+ * SSLAB
+ * Jeju Nation University.
+ */
+
 package kr.ac.jejunu.giftapplication.home;
 
 import android.os.Bundle;
@@ -53,21 +59,21 @@ public class MainActivity extends AppCompatActivity
 
     private FundingViewPagerAdapter setFundingViewPagerAdapter() {
         FundingViewPagerAdapter adapter = new FundingViewPagerAdapter(getSupportFragmentManager());
-        adapter.addPage(new AvailableFundingFragment(), getResources().getString(R.string.availableFunding));
-        adapter.addPage(new CompleteFundingFragment(), getResources().getString(R.string.completeFunding));
+        adapter.addPage(AvailableFundingFragment.newInstance(), getResources().getString(R.string.availableFunding));
+        adapter.addPage(CompleteFundingFragment.newInstance(), getResources().getString(R.string.completeFunding));
         return adapter;
     }
 
     private void setDrawerSettings() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.getHeaderView(0);
         setUserInfo(headerLayout);
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

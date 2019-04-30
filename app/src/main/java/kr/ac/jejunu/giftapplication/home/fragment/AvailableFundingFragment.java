@@ -1,16 +1,14 @@
-package kr.ac.jejunu.giftapplication.home.fragment;
+/**
+ * Author. Aerain
+ * SSLAB
+ * Jeju Nation University.
+ */
 
-import androidx.lifecycle.ViewModelProviders;
+package kr.ac.jejunu.giftapplication.home.fragment;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,21 +16,22 @@ import android.widget.ImageView;
 
 import java.util.HashMap;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import kr.ac.jejunu.giftapplication.FileIO;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.gamedetail.GameDetail;
-import kr.ac.jejunu.giftapplication.home.viewmodel.AvailableFundingViewModel;
 import kr.ac.jejunu.giftapplication.home.adapter.FundingAdapter;
+import kr.ac.jejunu.giftapplication.home.viewmodel.AvailableFundingViewModel;
+import kr.ac.jejunu.giftapplication.vo.GameVO;
 
 public class AvailableFundingFragment extends Fragment {
-
-    private final FileIO fileIO = new FileIO();
     private AvailableFundingViewModel mViewModel;
-    private RecyclerView.Adapter fundingAdapter;
     private RecyclerView fundingRecyclerView;
-    private RecyclerView.LayoutManager layoutManager;
 
     public static AvailableFundingFragment newInstance() {
         return new AvailableFundingFragment();
@@ -55,27 +54,24 @@ public class AvailableFundingFragment extends Fragment {
     }
 
     private void setRecyclerView() {
-        layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         fundingRecyclerView.setLayoutManager(layoutManager);
-        fundingAdapter = new FundingAdapter(mViewModel.getFundingList(), (view, position) -> transition(view, position));
+        RecyclerView.Adapter fundingAdapter = new FundingAdapter(mViewModel.getFundingList(), this::transition);
         fundingRecyclerView.setAdapter(fundingAdapter);
     }
 
-    private void transition(ImageView view, int position) {
+    private void transition(ImageView view, GameVO game) {
         Intent intent = new Intent(getContext(), GameDetail.class);
         HashMap<String, Object> params = new HashMap<>();
         String fileName = "homeGameImage.png";
-        params.put("index", position);
-        params.put("fileName", fileName);
-        intent.putExtra("params", params);
-        fileIO.saveImage(view, fileName, getContext());
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions
-                    .makeSceneTransitionAnimation(getActivity(), view, getResources().getString(R.string.funding_game_image));
-            startActivity(intent, options.toBundle());
-        } else {
-            startActivity(intent);
-        }
+        FileIO.saveImage(view, fileName, getContext());
 
+        intent.putExtra("params", params);
+        intent.putExtra("fileName", fileName);
+//        intent.putExtra("game", game);
+
+        ActivityOptions options = ActivityOptions
+                .makeSceneTransitionAnimation(getActivity(), view, getResources().getString(R.string.funding_game_image));
+        startActivity(intent, options.toBundle());
     }
 }
