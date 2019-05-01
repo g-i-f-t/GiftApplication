@@ -10,4 +10,15 @@
     <string name="availableFunding">진행중</string>
     <string name="completeFunding">진행완료</string>
     <string name="funding_game_image">gameImage</string>
+    <string name="detail_price_info">증액 예정</string>
+    <string name="detail_investment_button">이 게임에 투자하기</string>
+    <string name="game_introduction">게임 소개</string>
+    <string name="game_introduction_title">게임 소개</string>
+    <string name="investment_introduction_title">투자 설명서</string>
+    <string name="investment_condition_title">투자 조건 및 수익 모델</string>
+    <string name="company_introduction_title">회사 소개</string>
+    <string name="drawer_investment_display">투자 화면</string>
+    <string name="drawer_my_investment_list">내 투자 확인</string>
+    <string name="drawer_announce">공지</string>
+    <string name="drawer_use_guide">이용 가이드</string>
 </resources>

@@ -25,6 +25,7 @@ import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.adapter.FundingViewPagerAdapter;
 import kr.ac.jejunu.giftapplication.home.fragment.AvailableFundingFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.CompleteFundingFragment;
+import kr.ac.jejunu.giftapplication.vo.GameVO;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ViewPager fundingViewPager;
     private TabLayout fundingTableLayout;
+    private TextView gameTitle;
+    private TextView gameDeveloper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity
         super.setContentView(layoutResID);
         fundingTableLayout = findViewById(R.id.funding_tab);
         fundingViewPager = findViewById(R.id.funding_pager);
+        gameTitle = findViewById(R.id.game_title);
+        gameDeveloper = findViewById(R.id.game_developer);
     }
 
     private void setTabLayout() {

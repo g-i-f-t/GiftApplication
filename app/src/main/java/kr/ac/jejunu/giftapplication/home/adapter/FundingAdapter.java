@@ -45,7 +45,7 @@ public class FundingAdapter extends RecyclerView.Adapter {
         if(position == 0)
             fundingViewHolder.getFundingLayout().setMinHeight(360);
         else
-            fundingViewHolder.getFundingLayout().setMinHeight(480);
+            fundingViewHolder.getFundingLayout().setMinHeight(540);
 
         fundingViewHolder.getFundingLayout().setOnClickListener(v ->
                 callBackHomeIntent.callback(fundingViewHolder.getGameImage(), fundingList.get(position)));
