@@ -21,4 +21,9 @@
     <string name="drawer_my_investment_list">내 투자 확인</string>
     <string name="drawer_announce">공지</string>
     <string name="drawer_use_guide">이용 가이드</string>
+    <string name="investment_button_content_description">투자가 좋아요</string>
+    <string name="game_image_content_description">게임이미지</string>
+    <string name="investment_risk_title">투자 위험 고지 및 약관 동의</string>
+    <string name="welcome">환영합니다!</string>
+    <string name="welcome_sub">G.I.F.T와 함께 소규모 인디게임을 응원해 보세요!</string>
 </resources>

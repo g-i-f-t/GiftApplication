@@ -22,7 +22,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
+            android:layout_gravity="start|center_vertical"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="12dp">
 
@@ -35,7 +35,7 @@
                     android:id="@+id/detail_game_image"
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="?attr/actionBarSize"
-                    android:contentDescription=" "
+                    android:contentDescription="@string/game_image_content_description"
                     android:transitionName="@string/funding_game_image" />
 
                 <LinearLayout
@@ -107,7 +107,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="16dp"
-                    android:text="목표 금액 5,000,000원"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -151,7 +150,6 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginBottom="32dp"
-                    android:text="4,500,000원 (90%)"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/progressBar"
@@ -183,7 +181,6 @@
                     android:layout_margin="8dp"
                     android:layout_marginBottom="16dp"
                     android:lineSpacingExtra="4sp"
-                    android:text="TextView"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
@@ -211,7 +208,6 @@
                     android:layout_margin="8dp"
                     android:layout_marginBottom="16dp"
                     android:lineSpacingExtra="4sp"
-                    android:text="TextView"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
@@ -239,7 +235,6 @@
                     android:layout_margin="8dp"
                     android:layout_marginBottom="16dp"
                     android:lineSpacingExtra="4sp"
-                    android:text="TextView"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
@@ -267,7 +262,6 @@
                     android:layout_margin="8dp"
                     android:layout_marginBottom="16dp"
                     android:lineSpacingExtra="4sp"
-                    android:text="TextView"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
@@ -282,7 +276,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/toolbar_shape"
-        android:contentDescription="투자가 좋아요"
+        android:contentDescription="@string/investment_button_content_description"
         android:elevation="8dp"
         android:text="@string/detail_investment_button"
         android:textColor=" @android:color/black"

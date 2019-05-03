@@ -6,11 +6,13 @@
 
 package kr.ac.jejunu.giftapplication.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.adapter.FundingViewPagerAdapter;
 import kr.ac.jejunu.giftapplication.home.fragment.AvailableFundingFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.CompleteFundingFragment;
+import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
 import kr.ac.jejunu.giftapplication.vo.GameVO;
 
 import android.view.Menu;
@@ -35,8 +38,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ViewPager fundingViewPager;
     private TabLayout fundingTableLayout;
-    private TextView gameTitle;
-    private TextView gameDeveloper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +51,6 @@ public class MainActivity extends AppCompatActivity
         super.setContentView(layoutResID);
         fundingTableLayout = findViewById(R.id.funding_tab);
         fundingViewPager = findViewById(R.id.funding_pager);
-        gameTitle = findViewById(R.id.game_title);
-        gameDeveloper = findViewById(R.id.game_developer);
     }
 
     private void setTabLayout() {
@@ -81,6 +80,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.getHeaderView(0);
+        headerLayout.setOnClickListener(v -> {
+            Snackbar.make(v, "로그인 버튼 누름.", Snackbar.LENGTH_SHORT).show();
+            // TODO 로그인 인텐트 구현.
+        });
         setUserInfo(headerLayout);
     }
 
@@ -104,11 +107,27 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId()) {
+            case R.id.drawer_investment_display:
+                break;
+            case R.id.drawer_my_investment_list:
+                break;
+            case R.id.drawer_announce:
+                break;
+            case R.id.drawer_use_guide:
+                Intent intent = new Intent(this, IntroductionActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                break;
+        }
         return false;
     }
 }

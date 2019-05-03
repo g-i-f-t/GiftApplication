@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:ems="10"
-            android:hint="검색하세요"
+            android:hint="탭하여 검색하기"
             android:inputType="text"
             android:selectAllOnFocus="true"
             android:textSize="14sp"
