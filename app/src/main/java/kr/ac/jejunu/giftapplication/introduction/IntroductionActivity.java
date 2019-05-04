@@ -9,10 +9,10 @@ package kr.ac.jejunu.giftapplication.introduction;
 import androidx.appcompat.app.AppCompatActivity;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
+import kr.ac.jejunu.giftapplication.login.LoginActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -44,14 +44,21 @@ public class IntroductionActivity extends AppCompatActivity {
                 case 1:
                     break;
                 case 2:
-                    Button button = view.findViewById(R.id.introduction_start_button);
-                    button.setOnClickListener(v -> start());
+                    Button loginButton = view.findViewById(R.id.introduction_login);
+                    loginButton.setOnClickListener(v -> login());
+                    TextView withoutLogin = view.findViewById(R.id.introduction_without_login);
+                    withoutLogin.setOnClickListener(v -> start());
                     break;
                 default:
                     break;
             }
             return view;
         });
+    }
+
+    private void login() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override
