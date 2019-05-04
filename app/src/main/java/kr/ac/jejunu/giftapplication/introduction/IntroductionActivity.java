@@ -39,12 +39,13 @@ public class IntroductionActivity extends AppCompatActivity {
             View view = getLayoutInflater().inflate(layoutResourcesId[position], null);
             switch(position) {
                 case 0:
-                    Button button = view.findViewById(R.id.introduction_start_button);
-                    button.setOnClickListener(v -> start());
+
                     break;
                 case 1:
                     break;
                 case 2:
+                    Button button = view.findViewById(R.id.introduction_start_button);
+                    button.setOnClickListener(v -> start());
                     break;
                 default:
                     break;

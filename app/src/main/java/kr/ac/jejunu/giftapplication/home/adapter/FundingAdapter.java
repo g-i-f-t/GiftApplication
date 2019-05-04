@@ -19,14 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import kr.ac.jejunu.giftapplication.R;
-import kr.ac.jejunu.giftapplication.home.CallBackHomeIntent;
 import kr.ac.jejunu.giftapplication.vo.GameVO;
 
 public class FundingAdapter extends RecyclerView.Adapter {
     private final ArrayList<GameVO> fundingList;
-    private CallBackHomeIntent callBackHomeIntent;
+    private FundingAdapter.CallBack callBackHomeIntent;
 
-    public FundingAdapter(List<GameVO> fundingList, CallBackHomeIntent callbackHomeIntent) {
+    public FundingAdapter(List<GameVO> fundingList, FundingAdapter.CallBack callbackHomeIntent) {
         this.fundingList = (ArrayList<GameVO>) fundingList;
         this.callBackHomeIntent = callbackHomeIntent;
     }
@@ -73,5 +72,9 @@ public class FundingAdapter extends RecyclerView.Adapter {
         ImageView getGameImage() {
             return gameImage;
         }
+    }
+
+    public interface CallBack {
+        public void callback(final ImageView view, final GameVO gameVO);
     }
 }
