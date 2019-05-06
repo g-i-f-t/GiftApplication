@@ -47,13 +47,17 @@ public class IntroductionActivity extends AppCompatActivity {
                     Button loginButton = view.findViewById(R.id.introduction_login);
                     loginButton.setOnClickListener(v -> login());
                     TextView withoutLogin = view.findViewById(R.id.introduction_without_login);
-                    withoutLogin.setOnClickListener(v -> start());
+                    withoutLogin.setOnClickListener(this::register());
                     break;
                 default:
                     break;
             }
             return view;
         });
+    }
+
+    private void register(View view) {
+        // Todo 회원가입 로직 구현
     }
 
     private void login() {
@@ -67,7 +71,7 @@ public class IntroductionActivity extends AppCompatActivity {
         introductionCarousel = findViewById(R.id.introduction_carousel);
     }
 
-    public void start() {
+    public void start(View v) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         // TODO 액티비티 실행 후 다시는 이 액티비티를 안보이게 차단하게!
