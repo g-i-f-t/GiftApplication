@@ -6,6 +6,8 @@
 
 package kr.ac.jejunu.giftapplication.home.viewmodel;
 
+import android.os.AsyncTask;
+
 import java.util.List;
 
 import kr.ac.jejunu.giftapplication.vo.GameVO;

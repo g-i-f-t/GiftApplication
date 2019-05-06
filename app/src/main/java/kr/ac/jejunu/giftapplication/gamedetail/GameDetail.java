@@ -38,6 +38,7 @@ public class GameDetail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        gameViewModel = new GameViewModel();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_detail);
         initView();
@@ -55,7 +56,6 @@ public class GameDetail extends AppCompatActivity {
     }
 
     private void bindwithGameVO() {
-        gameViewModel = new GameViewModel();
         gameVO = gameViewModel.getGameVO();
         gameTitle.setText(gameVO.getName());
         gameDeveloper.setText(gameVO.getDeveloper());
