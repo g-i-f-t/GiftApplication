@@ -45,9 +45,9 @@ public class IntroductionActivity extends AppCompatActivity {
                     break;
                 case 2:
                     Button loginButton = view.findViewById(R.id.introduction_login);
-                    loginButton.setOnClickListener(v -> login());
+                    loginButton.setOnClickListener(this::login);
                     TextView withoutLogin = view.findViewById(R.id.introduction_without_login);
-                    withoutLogin.setOnClickListener(this::register());
+                    withoutLogin.setOnClickListener(this::register);
                     break;
                 default:
                     break;
@@ -60,7 +60,7 @@ public class IntroductionActivity extends AppCompatActivity {
         // Todo 회원가입 로직 구현
     }
 
-    private void login() {
+    private void login(View v) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
