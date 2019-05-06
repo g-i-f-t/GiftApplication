@@ -16,7 +16,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.LoginActivity"></activity>
+        <activity android:name=".login.LoginLoadingActivity"></activity>
+        <activity android:name=".login.LoginActivity" />
         <activity android:name=".introduction.IntroductionActivity" />
         <activity android:name=".gamedetail.InvestmentAgreementActivity" />
         <activity
