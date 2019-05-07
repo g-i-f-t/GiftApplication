@@ -1,23 +1,32 @@
 package kr.ac.jejunu.giftapplication.signup;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.content.Intent;
 import android.os.AsyncTask;
-import androidx.appcompat.app.AppCompatActivity;
-import kr.ac.jejunu.giftapplication.R;
-import kr.ac.jejunu.giftapplication.home.MainActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
+
+import androidx.appcompat.app.AppCompatActivity;
+import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.home.MainActivity;
+import kr.ac.jejunu.giftapplication.vo.AuthVO;
 
 public class Login_API2 extends AppCompatActivity {
     private TextView tv_outPut;
@@ -36,27 +45,17 @@ public class Login_API2 extends AppCompatActivity {
         final HashMap<String, String> extra = (HashMap<String, String>) prevIntent.getSerializableExtra("data");
 
         //        //URL 설정
-//          String url = "http://cybertec.jejunu.ac.kr";
-        //test server
-        String url = "http://hmkcode.appspot.com/jsonservlet";
-//        String url = "http://www.naver.com";
 
-//        NetWorkTask netWorkTask = null;
-//        try {
-//            netWorkTask = new NetWorkTask(url, new JSONObject() {{
-//                put("id",extra.get("id") );
-//                put("password", extra.get("password"));
-//                put("name", extra.get("name"));
-//                put("birthGender", extra.get("birthGender"));
-//                put("email", extra.get("email"));
-//                put("authCode", extra.get("code"));
-//                put("scope", extra.get("scope"));
-//            }});
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        netWorkTask.execute();
+        String url = "http://117.17.102.139:8080/addAccount";
+        JsonObject params = new JsonObject();
+        params.addProperty("password", extra.get("password"));
+        params.addProperty("name", extra.get("name"));
+        params.addProperty("email", extra.get("email"));
+        params.addProperty("authCode", extra.get("code"));
+        params.addProperty("scope", extra.get("scope"));
 
+        NetWorkTask netWorkTask = null;
+        netWorkTask = new NetWorkTask(url, new Gson().toJson(params));
 
         TextView authCode = findViewById(R.id.code);
         TextView scope = findViewById(R.id.scope);
@@ -78,6 +77,23 @@ public class Login_API2 extends AppCompatActivity {
         sex.setText(extra.get("sex"));
         email.setText(extra.get("email"));
 
+        try {
+            AuthVO result = netWorkTask.execute().get();
+            if(result != null) {
+                // Todo result에 user_seq_no 하고 access_token 들어있음.
+
+
+                Intent intent = new Intent(Login_API2.this,  MainActivity.class);
+                startActivity(intent);
+            } else {
+                finish();
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     Button.OnClickListener goMain = new View.OnClickListener() {
@@ -88,46 +104,56 @@ public class Login_API2 extends AppCompatActivity {
         }
     };
 
-//    public class NetWorkTask extends AsyncTask<Void, Void, String> {
-//        private String url;
-//        private JSONObject values;
-//
-//        public NetWorkTask(String url, JSONObject values) {
-//            this.url = url;
-//            this.values = values;
-//        }
-//
-//        @Override
-//        protected void onPreExecute(){
-//            super.onPreExecute();
-//        }
-//
-//        //execute한 후에 백그라운드 쓰레드에서 호출됨
-//        @Override
-//        protected String doInBackground(Void... params) {
-//            String result ="";
-//            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
-//            result = requestHttpURLConnection.request(url, values);
-//
-//            return result;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s){
-//            super.onPostExecute(s);
-//
-//            tv_outPut.setText(s);
-//        }
-//
-//        @Override
-//        protected void onCancelled(String result){
-//            super.onCancelled();
-//        }
-//
-//        @Override
-//        protected void onProgressUpdate(Void... params){
-//            super.onProgressUpdate(params);
-//        }
-//    }
+    public class NetWorkTask extends AsyncTask<Void, Void, AuthVO> {
+        private final String stringifiedJson;
+        private String url;
+
+        public NetWorkTask(String url, String stringifiedJson) {
+            this.url = url;
+            this.stringifiedJson = stringifiedJson;
+        }
+        //execute한 후에 백그라운드 쓰레드에서 호출됨
+        @Override
+        protected AuthVO doInBackground(Void... params) {
+            AuthVO result = null;
+            try {
+                URL uri = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("charset",  "UTF-8");
+                connection.setUseCaches(false);
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                OutputStream os = connection.getOutputStream();
+                os.write(stringifiedJson.getBytes(StandardCharsets.UTF_8));
+                os.flush();
+                os.close();
+
+                InputStream is = connection.getInputStream();
+
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                    builder.append('\n');
+                }
+
+                result = new Gson().fromJson(builder.toString(), AuthVO.class);
+
+                connection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+    }
 }
 
