@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
+import kr.ac.jejunu.giftapplication.login.HashService;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,8 +47,8 @@ public class SignUpActivity extends AppCompatActivity {
                 /* 패스워드 확인이 정상적으로 됨 */
                 HashMap<String, String> extra = new HashMap<>();
                 extra.put("name", name);
-                extra.put("id",email);
-                extra.put("password",  password);
+                extra.put("email",email);
+                extra.put("password", HashService.sha256(password));
 
                 Intent intent=new Intent(SignUpActivity.this, Login_API.class);
                 intent.putExtra("data", extra);

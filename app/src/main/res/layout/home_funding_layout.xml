@@ -18,9 +18,10 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/investment_status"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/funding_game_image"
+        app:layout_constraintVertical_bias="1.0"
         tools:text="게임 이름 테스트dd" />
 
     <ImageView
@@ -35,7 +36,7 @@
         app:srcCompat="@drawable/icon" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/investment_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -44,17 +45,16 @@
         android:text="투자 현황"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/investment_percentage"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/investment_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="90%"
         android:textAlignment="textEnd"
         android:textColor="@android:color/black"
         android:textSize="24sp"

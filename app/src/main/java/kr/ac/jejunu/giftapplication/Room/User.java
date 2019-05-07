@@ -14,7 +14,6 @@ public class User implements Serializable {
     private String usereamil;
     @ColumnInfo(name = "password")
     private String password;
-    @ColumnInfo(name = "usereamil")
 
     public long getId() {
         return id;
@@ -23,18 +22,21 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getUsereamil() {
+        return usereamil;
     }
 
-    public String getPassWord(){
-        return passWord;
+    public void setUsereamil(String usereamil) {
+        this.usereamil = usereamil;
     }
-    public void setPassWord(String passWord){
-        this.passWord = passWord;
+
+    public String getPassword() {
+        return password;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
 }
