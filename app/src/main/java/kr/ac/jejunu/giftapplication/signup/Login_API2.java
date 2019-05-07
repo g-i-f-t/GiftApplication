@@ -109,6 +109,7 @@ public class Login_API2 extends AppCompatActivity {
         public void onClick(View v) {
             Intent intent = new Intent(Login_API2.this,  MainActivity.class);
             startActivity(intent);
+            finish();
         }
     };
 

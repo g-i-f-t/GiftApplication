@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.login.LoginActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
@@ -85,6 +86,7 @@ public class Login_API extends AppCompatActivity {
                     extra.put("client_info", uri.getQueryParameter("client_info"));
                     intent.putExtra("data", extra);
                     startActivity(intent);
+                    finish();
                 }
             }
         });

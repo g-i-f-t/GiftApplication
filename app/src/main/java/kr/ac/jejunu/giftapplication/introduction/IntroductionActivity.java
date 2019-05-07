@@ -60,11 +60,13 @@ public class IntroductionActivity extends AppCompatActivity {
     private void signUp(View view) {
         // Todo 회원가입 로직 구현
         Intent intent = new Intent(this, SignUpActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
     private void login(View v) {
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 

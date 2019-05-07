@@ -53,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
                 Intent intent=new Intent(SignUpActivity.this, Login_API.class);
                 intent.putExtra("data", extra);
                 startActivity(intent);
+                finish();
             }
             else {
                 AlertDialog.Builder alert = showAlert();
