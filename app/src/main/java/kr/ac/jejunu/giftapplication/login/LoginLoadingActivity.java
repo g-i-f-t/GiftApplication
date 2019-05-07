@@ -2,6 +2,7 @@ package kr.ac.jejunu.giftapplication.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.home.MainActivity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -42,6 +43,10 @@ public class LoginLoadingActivity extends AppCompatActivity {
             int resultCode = task.execute().get();
             if(resultCode != 200) {
                 System.out.println("안돼" + resultCode);
+                finish();
+            } else {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         } catch (ExecutionException e) {
