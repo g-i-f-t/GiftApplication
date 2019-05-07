@@ -61,23 +61,16 @@ public class Login_API2 extends AppCompatActivity {
         TextView authCode = findViewById(R.id.code);
         TextView scope = findViewById(R.id.scope);
         TextView clientInfo = findViewById(R.id.client_info);
-        TextView id = findViewById(R.id.id);
+        TextView email = findViewById(R.id.email);
         TextView password = findViewById(R.id.password);
         TextView name = findViewById(R.id.name);
-        TextView birthGender = findViewById(R.id.birth);
-        TextView sex = findViewById(R.id.sex);
-        TextView email = findViewById(R.id.email);
 
         authCode.setText(extra.get("code"));
         scope.setText(extra.get("scope"));
         clientInfo.setText(extra.get("client_info"));
-        id.setText(extra.get("id"));
+        email.setText(extra.get("email"));
         password.setText(extra.get("password"));
         name.setText(extra.get("name"));
-        birthGender.setText(extra.get("birthGender"));
-        sex.setText(extra.get("sex"));
-        email.setText(extra.get("email"));
-
     }
 
     Button.OnClickListener goMain = new View.OnClickListener() {

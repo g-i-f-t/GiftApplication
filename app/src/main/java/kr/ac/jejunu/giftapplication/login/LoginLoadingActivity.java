@@ -30,7 +30,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
         }, 1500);
         Snackbar.make(getWindow().getDecorView().getRootView(), "넌 틀려먹었어", Snackbar.LENGTH_SHORT).show();
         if(email.equals(tempEmail) && password.equals(tempPassword)) {
-            // Todo 로그인 로직 구현하기! 이부분!
+            // Todo 로그인 로직 구현하기! 이부분! server에 POST쏘아서 받아온 데이터 == input data일치하는지 확인 후 Main으로
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
