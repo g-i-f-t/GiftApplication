@@ -1,19 +1,19 @@
 package kr.ac.jejunu.giftapplication.login;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.signup.SignUpActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
-import com.google.android.material.snackbar.Snackbar;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -64,11 +64,27 @@ public class LoginActivity extends AppCompatActivity {
         String emailString = email.getText().toString().trim();
         String passwordString = password.getText().toString().trim();
 
-        if(!(emailString.equals("") && passwordString.equals(""))) {
+        if (!emailString.equals("") && !passwordString.equals("")) {
             Intent intent = new Intent(this, LoginLoadingActivity.class);
             intent.putExtra("email", emailString);
             intent.putExtra("password", passwordString);
             startActivity(intent);
+        } else {
+            AlertDialog.Builder alert = showAlert();
+            alert.setMessage("양식에 맞게 입력해주세요.");
+            alert.show();
         }
+
     }
+    private AlertDialog.Builder showAlert() {
+            AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+            alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();     //닫기
+                }
+            });
+            return alert;
+    }
+
 }
