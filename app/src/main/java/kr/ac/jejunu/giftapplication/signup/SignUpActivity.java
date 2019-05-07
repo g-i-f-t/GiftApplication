@@ -50,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
                 extra.put("id",email);
                 extra.put("password",  password);
 
-                Intent intent=new Intent(SignUpActivity.this, MainActivity.class);
+                Intent intent=new Intent(SignUpActivity.this, Login_API.class);
                 intent.putExtra("data", extra);
                 startActivity(intent);
             }
