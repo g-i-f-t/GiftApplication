@@ -27,7 +27,7 @@
         android:layout_marginEnd="24dp"
         android:contentDescription="이메일"
         android:ems="10"
-        android:hint="예) foo@example.com"
+        android:hint="예) gift@example.com"
         android:inputType="textEmailAddress"
         android:singleLine="true"
         android:textAllCaps="false"
@@ -115,13 +115,14 @@
         app:layout_constraintTop_toBottomOf="@+id/login_name" />
 
     <LinearLayout
-        android:id="@+id/api_login_button"
+        android:id="@+id/load_Api"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:onClick="load_Api"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
