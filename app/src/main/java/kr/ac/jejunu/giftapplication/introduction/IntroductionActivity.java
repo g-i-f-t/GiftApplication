@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
 import kr.ac.jejunu.giftapplication.login.LoginActivity;
+import kr.ac.jejunu.giftapplication.signup.SignUpActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,7 +48,7 @@ public class IntroductionActivity extends AppCompatActivity {
                     Button loginButton = view.findViewById(R.id.introduction_login);
                     loginButton.setOnClickListener(this::login);
                     TextView withoutLogin = view.findViewById(R.id.introduction_without_login);
-                    withoutLogin.setOnClickListener(this::register);
+                    withoutLogin.setOnClickListener(this::signUp);
                     break;
                 default:
                     break;
@@ -56,8 +57,10 @@ public class IntroductionActivity extends AppCompatActivity {
         });
     }
 
-    private void register(View view) {
+    private void signUp(View view) {
         // Todo 회원가입 로직 구현
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
     }
 
     private void login(View v) {
