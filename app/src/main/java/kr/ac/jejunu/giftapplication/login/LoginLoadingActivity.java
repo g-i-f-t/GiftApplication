@@ -3,7 +3,10 @@ package kr.ac.jejunu.giftapplication.login;
 import androidx.appcompat.app.AppCompatActivity;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
+import kr.ac.jejunu.giftapplication.vo.AuthVO;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,7 +14,10 @@ import android.os.Bundle;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -40,11 +46,18 @@ public class LoginLoadingActivity extends AppCompatActivity {
         String url = "http://117.17.102.139:8080/validateAccount";
         LoginTask task = new LoginTask(url, email, password);
         try {
-            int resultCode = task.execute().get();
-            if(resultCode != 200) {
-                System.out.println("안돼" + resultCode);
-                finish();
+            AuthVO resultCode = task.execute().get();
+            if(resultCode == null || resultCode.getCode() != 200) {
+                if(resultCode != null)
+                    System.out.println("안돼" + resultCode.getMessages());
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.login_task_dialog_title)
+                        .setMessage(R.string.login_task_dialog_content)
+                        .setCancelable(false)
+                        .setPositiveButton("확인", this::onClickDialog);
+                builder.create().show();
             } else {
+                // Todo 똑같이 AuthVO임. Room에 담을 것.
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -70,6 +83,10 @@ public class LoginLoadingActivity extends AppCompatActivity {
 
     }
 
+    private void onClickDialog(DialogInterface dialogInterface, int i) {
+        finish();
+    }
+
     private void getExtra() {
         Intent prevIntent = getIntent();
         email = prevIntent.getStringExtra("email");
@@ -80,7 +97,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
     public void onBackPressed() {
     }
 
-    public class LoginTask extends AsyncTask<Void, Void, Integer> {
+    public class LoginTask extends AsyncTask<Void, Void, AuthVO> {
         private final String url;
         private final String password;
         private final String email;
@@ -92,8 +109,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Integer doInBackground(Void... voids) {
-            Integer responseCode = null;
+        protected AuthVO doInBackground(Void... voids) {
+            AuthVO result = null;
             try {
                 URL uri = new URL(url);
                 HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
@@ -113,7 +130,19 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 os.write(gson.toJson(body).getBytes(StandardCharsets.UTF_8));
                 os.flush();
                 os.close();
-                responseCode = connection.getResponseCode();
+
+                InputStream is = connection.getInputStream();
+
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                    builder.append('\n');
+                }
+
+                result = new Gson().fromJson(builder.toString(), AuthVO.class);
                 connection.disconnect();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -123,7 +152,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            return responseCode != null ? responseCode : 404;
+            return result;
         }
 
 
