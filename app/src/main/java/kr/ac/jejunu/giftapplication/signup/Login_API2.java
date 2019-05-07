@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -21,10 +22,14 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.Room.AppDatabase;
+import kr.ac.jejunu.giftapplication.vo.User;
+import kr.ac.jejunu.giftapplication.Room.UserDao;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
 import kr.ac.jejunu.giftapplication.vo.AuthVO;
 
@@ -70,16 +75,24 @@ public class Login_API2 extends AppCompatActivity {
         email.setText(extra.get("email"));
         password.setText(extra.get("password"));
         name.setText(extra.get("name"));
-        email.setText(extra.get("email"));
 
         try {
             AuthVO result = netWorkTask.execute().get();
             if(result != null) {
                 // Todo result에 user_seq_no 하고 access_token 들어있음.
+                User user;
+                UserDao roomUserDao = AppDatabase.getInstance(this).roomUserDao();
+                user = new User();
+                user.setUserSeqNo(result.getUser_seq_no());
+                user.setAccessToken(result.getAccess_token());
+                tv_outPut.setText(result.getAccess_token() + ", " + result.getUser_seq_no());
+                AccessDBTask task = new AccessDBTask(roomUserDao);
+                task.execute(user);
 
-
-                Intent intent = new Intent(Login_API2.this,  MainActivity.class);
-                startActivity(intent);
+//                List<User> userList = roomUserDao.getAll();
+//                System.out.println(userList.toString());
+//                Intent intent = new Intent(Login_API2.this,  MainActivity.class);
+//                startActivity(intent);
             } else {
                 finish();
             }
@@ -108,6 +121,7 @@ public class Login_API2 extends AppCompatActivity {
             this.stringifiedJson = stringifiedJson;
         }
         //execute한 후에 백그라운드 쓰레드에서 호출됨
+
         @Override
         protected AuthVO doInBackground(Void... params) {
             AuthVO result = null;
@@ -148,6 +162,29 @@ public class Login_API2 extends AppCompatActivity {
             }
 
             return result;
+        }
+
+    }
+
+    private class AccessDBTask extends AsyncTask<User, Void, Void> {
+        private final UserDao roomUserDao;
+
+        public AccessDBTask(UserDao roomUserDao) {
+            this.roomUserDao = roomUserDao;
+        }
+
+        @Override
+        protected Void doInBackground(User... users) {
+            for(User user: users)
+                roomUserDao.add(user);
+            final String result = roomUserDao.getAll().get(0).getAccessToken();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(Login_API2.this, result, Toast.LENGTH_SHORT).show();
+                }
+            });
+            return null;
         }
     }
 }
