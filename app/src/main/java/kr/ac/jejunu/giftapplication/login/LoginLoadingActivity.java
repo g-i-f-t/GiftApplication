@@ -59,6 +59,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
             } else {
                 // Todo 똑같이 AuthVO임. Room에 담을 것.
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             }
