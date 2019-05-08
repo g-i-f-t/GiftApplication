@@ -44,7 +44,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
 
         // Todo 로그인 로직 구현
         String url = "http://117.17.102.139:8080/validateAccount";
-        LoginTask task = new LoginTask(url, email, password);
+        LoginTask task = new LoginTask(url, email, HashService.sha256(password));
         try {
             AuthVO resultCode = task.execute().get();
             if(resultCode == null || resultCode.getCode() != 200) {
@@ -126,7 +126,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 JsonObject body = new JsonObject();
 
                 body.addProperty("email", email);
-                body.addProperty("password", HashService.sha256(password));
+                body.addProperty("password", password);
                 OutputStream os = connection.getOutputStream();
                 os.write(gson.toJson(body).getBytes(StandardCharsets.UTF_8));
                 os.flush();
