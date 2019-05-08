@@ -80,12 +80,18 @@ public class Login_API2 extends AppCompatActivity {
             AuthVO result = netWorkTask.execute().get();
             if(result != null) {
                 // Todo result에 user_seq_no 하고 access_token 들어있음.
+                tv_outPut.setText(result.getAccess_token() != null ? result.getAccess_token() : "" + ", " + result.getUser_seq_no() != null ? result.getUser_seq_no() : "" );
+
+                if(result.getCode() == 401)
+                    tv_outPut.setText("이미 가입했었는데요?");
+                if(result.getAccess_token() == null || result.getUser_seq_no() == null) return;
+
                 User user;
                 UserDao roomUserDao = AppDatabase.getInstance(this).roomUserDao();
                 user = new User();
                 user.setUserSeqNo(result.getUser_seq_no());
                 user.setAccessToken(result.getAccess_token());
-                tv_outPut.setText(result.getAccess_token() + ", " + result.getUser_seq_no());
+
                 AccessDBTask task = new AccessDBTask(roomUserDao);
                 task.execute(user);
 
@@ -108,6 +114,7 @@ public class Login_API2 extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(Login_API2.this,  MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
         }
