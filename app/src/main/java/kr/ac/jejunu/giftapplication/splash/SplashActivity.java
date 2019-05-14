@@ -17,7 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -25,20 +25,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
+import kr.ac.jejunu.giftapplication.GiftApplication;
 import kr.ac.jejunu.giftapplication.Room.AppDatabase;
 import kr.ac.jejunu.giftapplication.Room.UserDao;
+import kr.ac.jejunu.giftapplication.home.MainActivity;
 import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
 import kr.ac.jejunu.giftapplication.vo.AuthVO;
 import kr.ac.jejunu.giftapplication.vo.LoginVO;
+import kr.ac.jejunu.giftapplication.vo.Profile;
 import kr.ac.jejunu.giftapplication.vo.User;
 
 public class SplashActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        long id = 1;
         User user = new User();
         UserDao roomUserDao = AppDatabase.getInstance(this).roomUserDao();
         AccessDBTask task = new AccessDBTask(roomUserDao);
@@ -53,40 +54,50 @@ public class SplashActivity extends AppCompatActivity {
         }
         if (LoginKey != null) {
             //TODO server와 통신
-            String url = "http://117.17.102.139:8080/addAccount/"+LoginKey;
+            String url = "http://117.17.102.139:8080/account/"+LoginKey;
             NetWorkTask netWorkTask = new NetWorkTask(url);
-            netWorkTask.execute().get(user)
+            LoginVO result = null;
+            try {
+                result = netWorkTask.execute().get();
+                if(result.getCode() == 200){
+                    Profile profile = new Profile();
+                    profile.setName(result.getName());
+                    profile.setEmail(result.getEmail());
 
+                    ((GiftApplication) getApplication()).setUserInfo(profile);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             Intent intent = new Intent(this, IntroductionActivity.class);
             startActivity(intent);
             finish();
         }
     }
-
     public static class NetWorkTask extends AsyncTask<Void, Void, LoginVO> {
         private String url;
 
         public NetWorkTask(String url) {
             this.url = url;
+
         }
         //execute한 후에 백그라운드 쓰레드에서 호출됨
 
         @Override
-        protected LoginVO doInBackground(Void... params) {
+        protected  LoginVO doInBackground(Void... params) {
             LoginVO result = null;
             try {
                 URL uri = new URL(url);
-                java.net.HttpURLConnection connection = (java.net.HttpURLConnection) uri.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setRequestProperty("charset", "UTF-8");
-                connection.setUseCaches(false);
-                connection.setDoInput(true); //body에 값을 넣을 건지
-                connection.setDoOutput(true); //값을 반환 받을건지
-                OutputStream os = connection.getOutputStream();
-                os.flush();
-                os.close();
+
+                HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+                connection.setRequestMethod("GET");
+//                connection.setRequestProperty("Content-Type", "application/json");
+//                connection.setRequestProperty("charset", "UTF-8");
+//                connection.setUseCaches(false);
 
                 InputStream is = connection.getInputStream();
 
@@ -99,8 +110,7 @@ public class SplashActivity extends AppCompatActivity {
                     builder.append('\n');
                 }
 
-                result = new Gson().fromJson(builder.toString(), AuthVO.class);
-
+                result = new Gson().fromJson(builder.toString(), LoginVO.class);
                 connection.disconnect();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -111,7 +121,6 @@ public class SplashActivity extends AppCompatActivity {
             }
             return result;
         }
-
     }
     private class AccessDBTask extends AsyncTask<User, Void, String> {
         private final UserDao roomUserDao;
@@ -122,13 +131,14 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(User... users) {
+            long id = 1;
             for(User user: users)
-                roomUserDao.get(1);
+                roomUserDao.get(id);
             final String result = roomUserDao.getAll().get(0).getUserSeqNo();
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    //TODO send server(userToken)
+
                 }
             });
             return result;

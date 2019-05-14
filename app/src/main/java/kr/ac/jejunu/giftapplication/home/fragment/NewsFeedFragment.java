@@ -13,6 +13,7 @@ import kr.ac.jejunu.giftapplication.home.viewmodel.NewsfeedViewModel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class NewsFeedFragment extends Fragment {
 
@@ -25,7 +26,9 @@ public class NewsFeedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.newsfeed_fragment, container, false);
+
     }
 
     @Override
@@ -33,6 +36,10 @@ public class NewsFeedFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewsfeedViewModel.class);
         // TODO: Use the ViewModel
+
+
     }
+
+
 
 }

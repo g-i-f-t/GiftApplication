@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setDrawerSettings() {
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.getHeaderView(0);

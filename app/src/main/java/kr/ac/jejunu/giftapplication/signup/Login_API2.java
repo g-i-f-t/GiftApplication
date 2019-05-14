@@ -118,12 +118,12 @@ public class Login_API2 extends AppCompatActivity {
     };
 
     public static class NetWorkTask extends AsyncTask<Void, Void, AuthVO> {
-        private final String stringifiedJson;
+        private final String stringfiedJson;
         private String url;
 
-        public NetWorkTask(String url, String stringifiedJson) {
+        public NetWorkTask(String url, String stringfiedJson) {
             this.url = url;
-            this.stringifiedJson = stringifiedJson;
+            this.stringfiedJson = stringfiedJson;
         }
         //execute한 후에 백그라운드 쓰레드에서 호출됨
 
@@ -140,7 +140,7 @@ public class Login_API2 extends AppCompatActivity {
                 connection.setDoInput(true); //body에 값을 넣을 건지
                 connection.setDoOutput(true); //값을 반환 받을건지
                 OutputStream os = connection.getOutputStream();
-                os.write(stringifiedJson.getBytes(StandardCharsets.UTF_8));
+                os.write(stringfiedJson.getBytes(StandardCharsets.UTF_8));
                 os.flush();
                 os.close();
 

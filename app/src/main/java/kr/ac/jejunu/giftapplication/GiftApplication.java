@@ -18,6 +18,7 @@ public class GiftApplication extends Application {
     }
     public String userInfo() {
         // Todo
-        return "로그인";
+
+        return profile != null ? profile.getName() : "로그인";
     }
 }
