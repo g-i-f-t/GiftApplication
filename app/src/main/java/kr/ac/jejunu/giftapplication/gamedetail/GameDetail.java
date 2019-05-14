@@ -9,11 +9,19 @@ package kr.ac.jejunu.giftapplication.gamedetail;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.synnapps.carouselview.CarouselView;
 
 import java.io.File;
@@ -23,6 +31,7 @@ import java.util.Locale;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.vo.GameVO;
 
@@ -36,7 +45,8 @@ public class GameDetail extends AppCompatActivity {
     private CarouselView carouselView;
     private Button mButton;
     private GameVO gameVO;
-
+    private ScrollView gameDetailMainView;
+    private boolean isBottom = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         gameViewModel = new GameViewModel();
@@ -49,11 +59,35 @@ public class GameDetail extends AppCompatActivity {
         bindwithGameVO();
         setHeaderImage();
         setCarouselView();
+        setButtonTransition();
         mButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, InvestmentAgreementActivity.class);
             startActivity(intent);
         });
 
+    }
+
+    private void setButtonTransition() {
+        gameDetailMainView.getViewTreeObserver().addOnScrollChangedListener(this::onScrollchanged);
+    }
+
+    private void onScrollchanged() {
+        if (gameDetailMainView.getChildAt(0).getBottom()
+                == (gameDetailMainView.getHeight() + gameDetailMainView.getScrollY()) ) {
+            ConstraintLayout.MarginLayoutParams layoutParams = (ConstraintLayout.MarginLayoutParams) mButton.getLayoutParams();
+            layoutParams.setMargins(0, 0, 0, 0);
+            mButton.requestLayout();
+            //scroll view is at bottom
+        } else {
+            ConstraintLayout.MarginLayoutParams layoutParams = (ConstraintLayout.MarginLayoutParams) mButton.getLayoutParams();
+            layoutParams.setMargins((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, getResources().getDisplayMetrics()),
+                    0,
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, getResources().getDisplayMetrics()),
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics()));
+            layoutParams.width = ConstraintLayout.LayoutParams.MATCH_CONSTRAINT;
+            mButton.requestLayout();
+            //scroll view is not at bottom
+        }
     }
 
     private void bindwithGameVO() {
@@ -96,6 +130,7 @@ public class GameDetail extends AppCompatActivity {
         goalPrice = findViewById(R.id.goal_price);
         currentPrice = findViewById(R.id.current_price_and_percnetage);
         mButton = findViewById(R.id.investment_button);
+        gameDetailMainView = findViewById(R.id.game_detail_main_view);
         prevIntent = getIntent();
         setToolbar();
     }

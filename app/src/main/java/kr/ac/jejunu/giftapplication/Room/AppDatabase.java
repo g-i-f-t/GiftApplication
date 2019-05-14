@@ -9,7 +9,7 @@ import kr.ac.jejunu.giftapplication.vo.User;
 
 //DB테이블 생성을 해라!
 //TODO User에서 entity 스키마를  해당 데이터베이스에 구축
-@Database(entities = {User.class}, version =2)
+@Database(entities = {User.class}, version =2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao roomUserDao();
 
