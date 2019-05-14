@@ -25,6 +25,7 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import kr.ac.jejunu.giftapplication.DownloadImageTask;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.vo.GameVO;
 
@@ -99,28 +100,5 @@ public class FundingAdapter extends RecyclerView.Adapter {
         public void callback(final ImageView view, final GameVO gameVO);
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        private final ImageView gameImage;
 
-        public DownloadImageTask(ImageView gameImage) {
-            this.gameImage = gameImage;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            String uri = urls[0];
-            InputStream in = null;
-            try {
-                in = new URL(uri).openStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return BitmapFactory.decodeStream(in);
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            gameImage.setImageBitmap(bitmap);
-        }
-    }
 }

@@ -1,6 +1,7 @@
 package kr.ac.jejunu.giftapplication.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class GameVO implements Serializable {
     private Long gameId;
@@ -15,6 +16,7 @@ public class GameVO implements Serializable {
     private String investmentCondition;
     private String companyIntroduction;
     private String profileImage;
+    private List<String> describeImageList;
 
     public Long getGameId() {
         return gameId;
@@ -110,5 +112,13 @@ public class GameVO implements Serializable {
 
     public String getProfileImage() {
         return profileImage;
+    }
+
+    public List<String> getDescribeImageList() {
+        return describeImageList;
+    }
+
+    public void setDescribeImageList(List<String> describeImageList) {
+        this.describeImageList = describeImageList;
     }
 }
