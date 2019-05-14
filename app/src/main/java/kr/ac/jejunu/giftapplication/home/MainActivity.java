@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setUserInfo(View headerLayout) {
-        String userInfo = ((GiftApplication) getApplication()).userInfo();
+        String userInfo = ((GiftApplication) getApplication()).userInfo().getName();
         TextView userId = headerLayout.findViewById(R.id.user_id);
         userId.setText(userInfo);
     }
