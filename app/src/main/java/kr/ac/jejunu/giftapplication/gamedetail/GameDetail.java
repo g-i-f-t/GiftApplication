@@ -98,6 +98,7 @@ public class GameDetail extends AppCompatActivity {
     private void bindwithGameVO() {
         HashMap<String, Object> params = (HashMap<String, Object>) prevIntent.getSerializableExtra("params");
         gameVO = gameViewModel.getGameVO((Long) params.get("id"));
+        double progress = (((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100);
         gameTitle.setText((String) params.get("name"));
         gameDeveloper.setText((String) params.get("developer"));
         gameIntroduction.setText(gameVO.getGameInformation());
@@ -105,8 +106,8 @@ public class GameDetail extends AppCompatActivity {
         investmentCondition.setText(gameVO.getInvestmentCondition());
         companyIntroduction.setText(gameVO.getCompanyIntroduction());
         goalPrice.setText(String.format(Locale.KOREA, "목표 금액 %,d원", gameVO.getGoalPrice()));
-        fundingProgress.setProgress((int) ((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100);
-        currentPrice.setText(String.format(Locale.KOREA, "현재 %,d원 (%.1f %%)", gameVO.getCurrentPrice(), ((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100));
+        fundingProgress.setProgress((int) progress);
+        currentPrice.setText(String.format(Locale.KOREA, "현재 %,d원 (%.0f %%)", gameVO.getCurrentPrice(), progress));
         setCarouselView(gameVO.getDescribeImageList());
     }
 
