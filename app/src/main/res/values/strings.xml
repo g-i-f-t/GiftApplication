@@ -40,4 +40,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="login_task_dialog_title">로그인 실패</string>
+    <string name="login_task_dialog_content">계정이나 비밀번호를 다시 한번 확인해 주세요</string>
 </resources>

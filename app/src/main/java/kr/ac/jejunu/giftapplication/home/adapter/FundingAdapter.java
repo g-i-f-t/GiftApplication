@@ -42,7 +42,7 @@ public class FundingAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         FundingViewHolder fundingViewHolder = (FundingViewHolder) holder;
         fundingViewHolder.getGameName().setText(fundingList.get(position).getName());
-        double percentage = (fundingList.get(position).getGoalPrice() != 0 ? fundingList.get(position).getCurrentPrice() / fundingList.get(position).getGoalPrice() : 0.0f);
+        double percentage = (fundingList.get(position).getGoalPrice() != 0.0f ? ((double) fundingList.get(position).getCurrentPrice() / (double) fundingList.get(position).getGoalPrice()) : 0.0f);
         fundingViewHolder.getInvestmentPercentage().setText(String.format(Locale.KOREAN, "%.0f%%", percentage));
         if(position == 0)
             fundingViewHolder.getFundingLayout().setMinHeight(360);
