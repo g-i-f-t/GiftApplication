@@ -14,6 +14,7 @@ public class GameVO implements Serializable {
     private String investmentInformation;
     private String investmentCondition;
     private String companyIntroduction;
+    private String profileImage;
 
     public Long getGameId() {
         return gameId;
@@ -101,5 +102,13 @@ public class GameVO implements Serializable {
 
     public void setCompanyIntroduction(String companyIntroduction) {
         this.companyIntroduction = companyIntroduction;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
     }
 }

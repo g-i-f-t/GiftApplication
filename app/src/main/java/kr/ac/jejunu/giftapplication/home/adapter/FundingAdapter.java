@@ -6,12 +6,18 @@
 
 package kr.ac.jejunu.giftapplication.home.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,10 +46,11 @@ public class FundingAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+
         FundingViewHolder fundingViewHolder = (FundingViewHolder) holder;
+        new DownloadImageTask((ImageView) ((FundingViewHolder) holder).getGameImage()).execute(fundingList.get(position).getProfileImage());
         fundingViewHolder.getGameName().setText(fundingList.get(position).getName());
         fundingViewHolder.getDeveloper().setText(fundingList.get(position).getDeveloper());
-
         double percentage = (fundingList.get(position).getGoalPrice() != 0.0f ? ((double) fundingList.get(position).getCurrentPrice() / (double) fundingList.get(position).getGoalPrice()) : 0.0f);
         fundingViewHolder.getInvestmentPercentage().setText(String.format(Locale.KOREAN, "%.0f%%", percentage));
         if(position == 0)
@@ -90,5 +97,30 @@ public class FundingAdapter extends RecyclerView.Adapter {
 
     public interface CallBack {
         public void callback(final ImageView view, final GameVO gameVO);
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        private final ImageView gameImage;
+
+        public DownloadImageTask(ImageView gameImage) {
+            this.gameImage = gameImage;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            String uri = urls[0];
+            InputStream in = null;
+            try {
+                in = new URL(uri).openStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return BitmapFactory.decodeStream(in);
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            gameImage.setImageBitmap(bitmap);
+        }
     }
 }

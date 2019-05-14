@@ -24,7 +24,6 @@ public class InvestmentAgreementActivity extends AppCompatActivity {
 
     private void openWebView() {
         webview.getSettings().setJavaScriptEnabled(true);
-
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -40,7 +39,8 @@ public class InvestmentAgreementActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.arrow_back);
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(getResources().getString(R.string.investment_risk_title));
     }
 
     @Override
