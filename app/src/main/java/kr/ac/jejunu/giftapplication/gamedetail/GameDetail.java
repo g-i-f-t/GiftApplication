@@ -27,13 +27,16 @@ import com.synnapps.carouselview.CarouselView;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import kr.ac.jejunu.giftapplication.DownloadImageTask;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.home.adapter.FundingAdapter;
 import kr.ac.jejunu.giftapplication.vo.GameVO;
 
 public class GameDetail extends AppCompatActivity {
@@ -60,7 +63,7 @@ public class GameDetail extends AppCompatActivity {
     private void initView() {
         bindwithGameVO();
         setHeaderImage();
-        setCarouselView();
+
         setButtonTransition();
         mButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, InvestmentAgreementActivity.class);
@@ -95,6 +98,7 @@ public class GameDetail extends AppCompatActivity {
     private void bindwithGameVO() {
         HashMap<String, Object> params = (HashMap<String, Object>) prevIntent.getSerializableExtra("params");
         gameVO = gameViewModel.getGameVO((Long) params.get("id"));
+        double progress = (((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100);
         gameTitle.setText((String) params.get("name"));
         gameDeveloper.setText((String) params.get("developer"));
         gameIntroduction.setText(gameVO.getGameInformation());
@@ -102,8 +106,9 @@ public class GameDetail extends AppCompatActivity {
         investmentCondition.setText(gameVO.getInvestmentCondition());
         companyIntroduction.setText(gameVO.getCompanyIntroduction());
         goalPrice.setText(String.format(Locale.KOREA, "목표 금액 %,d원", gameVO.getGoalPrice()));
-        fundingProgress.setProgress((int) ((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100);
-        currentPrice.setText(String.format(Locale.KOREA, "현재 %,d원 (%.1f %%)", gameVO.getCurrentPrice(), ((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100));
+        fundingProgress.setProgress((int) progress);
+        currentPrice.setText(String.format(Locale.KOREA, "현재 %,d원 (%.0f %%)", gameVO.getCurrentPrice(), progress));
+        setCarouselView(gameVO.getDescribeImageList());
     }
 
     private void setHeaderImage() {
@@ -112,10 +117,12 @@ public class GameDetail extends AppCompatActivity {
         gameImage.setImageDrawable(drawable);
     }
 
-    private void setCarouselView() {
-        carouselView.setPageCount(5);
+    private void setCarouselView(List<String> describeImageList) {
+        carouselView.setPageCount(describeImageList.size());
         carouselView.setImageListener(((position, imageView) -> {
-            imageView.setImageResource(R.drawable.icon);
+            new DownloadImageTask(imageView).execute(describeImageList.get(position));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+//            imageView.setImageResource(R.drawable.icon);
         }));
     }
     @Override
