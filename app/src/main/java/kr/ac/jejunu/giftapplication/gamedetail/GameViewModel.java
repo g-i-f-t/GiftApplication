@@ -1,5 +1,9 @@
 package kr.ac.jejunu.giftapplication.gamedetail;
 
+import android.os.AsyncTask;
+
+import java.net.URL;
+
 import kr.ac.jejunu.giftapplication.vo.GameVO;
 
 public class GameViewModel {
@@ -15,5 +19,13 @@ public class GameViewModel {
         gameVO.setGoalPrice(5000000L);
         gameVO.setCurrentPrice(4500000L);
         return gameVO;
+    }
+
+    public class GameDetailTask extends AsyncTask<String, Void, GameVO> {
+        @Override
+        protected GameVO doInBackground(String... strings) {
+            String uri = strings[0];
+            return null;
+        }
     }
 }

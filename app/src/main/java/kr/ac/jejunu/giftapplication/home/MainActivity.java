@@ -12,9 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.snackbar.SnackbarContentLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
@@ -23,57 +26,66 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import kr.ac.jejunu.giftapplication.GiftApplication;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.adapter.FundingViewPagerAdapter;
 import kr.ac.jejunu.giftapplication.home.fragment.AvailableFundingFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.CompleteFundingFragment;
+import kr.ac.jejunu.giftapplication.home.fragment.FundingListFragment;
+import kr.ac.jejunu.giftapplication.home.fragment.NewsFeedFragment;
 import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ViewPager fundingViewPager;
-    private TabLayout fundingTableLayout;
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setDrawerSettings();
-        setTabLayout();
     }
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        fundingTableLayout = findViewById(R.id.funding_tab);
-        fundingViewPager = findViewById(R.id.funding_pager);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        openFragment(NewsFeedFragment.newInstance());
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.home_tab_newsfeed:
+                    openFragment(NewsFeedFragment.newInstance());
+                    break;
+                case R.id.home_tab_gamelist:
+                    openFragment(FundingListFragment.newInstance());
+                    break;
+                case R.id.home_tab_dummy:
+                    Snackbar.make(getWindow().getDecorView().getRootView(), "ㅎㅇ", Snackbar.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        });
+
     }
 
-    private void setTabLayout() {
-        FundingViewPagerAdapter adapter = setFundingViewPagerAdapter();
-        fundingViewPager.setAdapter(adapter);
-        fundingViewPager.setPageMargin((int) getResources().getDimension(R.dimen.view_pager_gap));
-        fundingViewPager.setOffscreenPageLimit(2);
-        fundingTableLayout.setupWithViewPager(fundingViewPager);
-    }
+    private void openFragment(final Fragment fragment)   {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_navigation_view, fragment);
+//        transaction.addToBackStack(null);
+        transaction.commit();
 
-    private FundingViewPagerAdapter setFundingViewPagerAdapter() {
-        FundingViewPagerAdapter adapter = new FundingViewPagerAdapter(getSupportFragmentManager());
-        adapter.addPage(AvailableFundingFragment.newInstance(), getResources().getString(R.string.availableFunding));
-        adapter.addPage(CompleteFundingFragment.newInstance(), getResources().getString(R.string.completeFunding));
-        return adapter;
     }
 
     private void setDrawerSettings() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.getHeaderView(0);
@@ -122,6 +134,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
                 finish();
                 break;
+
             default:
                 break;
         }

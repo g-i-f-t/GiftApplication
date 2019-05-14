@@ -42,6 +42,8 @@ public class FundingAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         FundingViewHolder fundingViewHolder = (FundingViewHolder) holder;
         fundingViewHolder.getGameName().setText(fundingList.get(position).getName());
+        fundingViewHolder.getDeveloper().setText(fundingList.get(position).getDeveloper());
+
         double percentage = (fundingList.get(position).getGoalPrice() != 0.0f ? ((double) fundingList.get(position).getCurrentPrice() / (double) fundingList.get(position).getGoalPrice()) : 0.0f);
         fundingViewHolder.getInvestmentPercentage().setText(String.format(Locale.KOREAN, "%.0f%%", percentage));
         if(position == 0)
@@ -59,12 +61,13 @@ public class FundingAdapter extends RecyclerView.Adapter {
     }
 
     public static class FundingViewHolder extends RecyclerView.ViewHolder{
-        private TextView gameName, investmentPercentage;
+        private TextView gameName, investmentPercentage, developer;
         private ConstraintLayout fundingLayout;
         private ImageView gameImage;
         FundingViewHolder(@NonNull View itemView) {
             super(itemView);
             gameName = itemView.findViewById(R.id.funding_game_name);
+            developer = itemView.findViewById(R.id.funding_game_developer);
             fundingLayout = itemView.findViewById(R.id.funding_item_layout);
             gameImage = itemView.findViewById(R.id.funding_game_image);
             investmentPercentage = itemView.findViewById(R.id.investment_percentage);
@@ -78,6 +81,10 @@ public class FundingAdapter extends RecyclerView.Adapter {
         }
         TextView getInvestmentPercentage() {
             return investmentPercentage;
+        }
+
+        public TextView getDeveloper() {
+            return developer;
         }
     }
 

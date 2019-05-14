@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_tab_newsfeed"
+        android:icon="@drawable/ic_baseline_timeline"
+        android:title="@string/home_tab_newsfeed" />
+    <item
+        android:id="@+id/home_tab_gamelist"
+        android:icon="@drawable/ic_baseline_gamepad"
+        android:title="@string/home_tab_gamelist"/>
+    <item
+        android:id="@+id/home_tab_dummy"
+        android:icon="@drawable/ic_baseline_tab"
+        android:title="@string/home_tab_dummy"/>
+</menu>

@@ -63,6 +63,8 @@ public class AvailableFundingFragment extends Fragment {
     private void transition(ImageView view, GameVO game) {
         Intent intent = new Intent(getContext(), GameDetail.class);
         HashMap<String, Object> params = new HashMap<>();
+        params.put("name", game.getName());
+        params.put("developer", game.getDeveloper());
         String fileName = "homeGameImage.png";
         FileIO.saveImage(view, fileName, getContext());
 
