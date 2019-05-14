@@ -57,7 +57,7 @@ public class Login_API2 extends AppCompatActivity {
         params.addProperty("name", extra.get("name"));
         params.addProperty("email", extra.get("email"));
         params.addProperty("authCode", extra.get("code"));
-        params.addProperty("scope", extra.get("scope"));
+        params.addProperty("scope", extra.get("scope")); //해당 계좌 접근 권한
 
         NetWorkTask netWorkTask = null;
         netWorkTask = new NetWorkTask(url, new Gson().toJson(params));
@@ -133,8 +133,8 @@ public class Login_API2 extends AppCompatActivity {
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("charset",  "UTF-8");
                 connection.setUseCaches(false);
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
+                connection.setDoInput(true); //body에 값을 넣을 건지
+                connection.setDoOutput(true); //값을 반환 받을건지
                 OutputStream os = connection.getOutputStream();
                 os.write(stringifiedJson.getBytes(StandardCharsets.UTF_8));
                 os.flush();

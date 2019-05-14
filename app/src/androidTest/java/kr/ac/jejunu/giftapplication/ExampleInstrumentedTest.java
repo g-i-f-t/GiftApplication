@@ -22,20 +22,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
     private Context context = InstrumentationRegistry.getInstrumentation().getContext();
+
     @Test
     public void addRoom() {
         String userId = "ohg429";
         String passWord = "1234";
-        User u1, u2;
+        User u1;
         UserDao roomUserDao = AppDatabase.getInstance(context).roomUserDao();
         u1 = new User();
-//        u1.setUsereamil(userId);
-//        u1.setPassword(passWord);
-//        long id = roomUserDao.add(u1);
-//
-//        u2 = roomUserDao.get(id);
-//        assertThat(u2.getId(), is(id));
-//        assertThat(u2.getUsereamil(), is(userId));
-//        assertThat(u2.getPassword(), is(passWord));
+        u1.setUserSeqNo(userId);
+        u1.setAccessToken(passWord);
+        long id = roomUserDao.add(u1);
+
+        User u2 = roomUserDao.get(id);
+        assertThat(u2.getId(), is(id));
+        assertThat(u2.getUserSeqNo(), is(userId));
+        assertThat(u2.getAccessToken(), is(passWord));
     }
 }
