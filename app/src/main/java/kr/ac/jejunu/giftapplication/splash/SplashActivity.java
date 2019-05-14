@@ -85,7 +85,6 @@ public class SplashActivity extends AppCompatActivity {
 
         public NetWorkTask(String url) {
             this.url = url;
-
         }
         //execute한 후에 백그라운드 쓰레드에서 호출됨
 
