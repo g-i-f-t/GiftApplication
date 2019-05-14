@@ -64,9 +64,6 @@ public class MainActivity extends AppCompatActivity
                 case R.id.home_tab_gamelist:
                     openFragment(FundingListFragment.newInstance());
                     break;
-                case R.id.home_tab_dummy:
-                    Snackbar.make(getWindow().getDecorView().getRootView(), "ㅎㅇ", Snackbar.LENGTH_SHORT).show();
-                    break;
                 default:
                     break;
             }
