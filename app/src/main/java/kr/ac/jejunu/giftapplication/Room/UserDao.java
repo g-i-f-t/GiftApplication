@@ -18,7 +18,7 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long add(User u1);
 
-    @Query("SELECT * FROM room_info WHERE userNum=:id")
+    @Query("SELECT * FROM room_info WHERE id=:id")
     User get(long id);
 
     @Delete
