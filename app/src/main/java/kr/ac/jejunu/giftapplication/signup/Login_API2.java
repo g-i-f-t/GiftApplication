@@ -16,13 +16,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -86,9 +84,8 @@ public class Login_API2 extends AppCompatActivity {
                     tv_outPut.setText("이미 가입했었는데요?");
                 if(result.getAccess_token() == null || result.getUser_seq_no() == null) return;
 
-                User user;
+                User user = new User();
                 UserDao roomUserDao = AppDatabase.getInstance(this).roomUserDao();
-                user = new User();
                 user.setUserSeqNo(result.getUser_seq_no());
                 user.setAccessToken(result.getAccess_token());
 
@@ -120,7 +117,7 @@ public class Login_API2 extends AppCompatActivity {
         }
     };
 
-    public class NetWorkTask extends AsyncTask<Void, Void, AuthVO> {
+    public static class NetWorkTask extends AsyncTask<Void, Void, AuthVO> {
         private final String stringifiedJson;
         private String url;
 
@@ -135,10 +132,10 @@ public class Login_API2 extends AppCompatActivity {
             AuthVO result = null;
             try {
                 URL uri = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+                java.net.HttpURLConnection connection = (java.net.HttpURLConnection) uri.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Content-Type", "application/json");
-                connection.setRequestProperty("charset",  "UTF-8");
+                connection.setRequestProperty("charset", "UTF-8");
                 connection.setUseCaches(false);
                 connection.setDoInput(true); //body에 값을 넣을 건지
                 connection.setDoOutput(true); //값을 반환 받을건지
