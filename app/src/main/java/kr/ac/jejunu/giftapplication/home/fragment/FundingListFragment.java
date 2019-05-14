@@ -74,7 +74,6 @@ public class FundingListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(GameListViewModel.class);
-        // TODO: Use the ViewModel
         setTabLayout();
         setDrawerSettings();
     }

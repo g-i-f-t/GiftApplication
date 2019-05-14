@@ -49,7 +49,6 @@ public class AvailableFundingFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(AvailableFundingViewModel.class);
-        // TODO: Use the ViewModel
         setRecyclerView();
     }
 
