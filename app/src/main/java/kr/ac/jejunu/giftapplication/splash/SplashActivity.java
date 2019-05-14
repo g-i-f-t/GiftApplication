@@ -138,7 +138,7 @@ public class SplashActivity extends AppCompatActivity {
 //                roomUserDao.get(id);
             String result = null;
             try {
-                result = roomUserDao.get(0).getUserSeqNo();
+                result = roomUserDao.getAll().get(0).getUserSeqNo();
             } catch (Exception e) {
                 e.printStackTrace();
             }

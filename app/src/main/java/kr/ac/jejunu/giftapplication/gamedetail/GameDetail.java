@@ -17,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ public class GameDetail extends AppCompatActivity {
     private Button mButton;
     private GameVO gameVO;
     private ScrollView gameDetailMainView;
+    private ProgressBar fundingProgress;
     private boolean isBottom = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,7 @@ public class GameDetail extends AppCompatActivity {
         investmentCondition.setText(gameVO.getInvestmentCondition());
         companyIntroduction.setText(gameVO.getCompanyIntroduction());
         goalPrice.setText(String.format(Locale.KOREA, "목표 금액 %,d원", gameVO.getGoalPrice()));
+        fundingProgress.setProgress((int) ((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100);
         currentPrice.setText(String.format(Locale.KOREA, "현재 %,d원 (%.1f %%)", gameVO.getCurrentPrice(), ((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100));
     }
 
@@ -131,6 +134,7 @@ public class GameDetail extends AppCompatActivity {
         currentPrice = findViewById(R.id.current_price_and_percnetage);
         mButton = findViewById(R.id.investment_button);
         gameDetailMainView = findViewById(R.id.game_detail_main_view);
+        fundingProgress = findViewById(R.id.progressBar);
         prevIntent = getIntent();
         setToolbar();
     }
