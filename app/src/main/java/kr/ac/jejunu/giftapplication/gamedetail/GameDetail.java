@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.synnapps.carouselview.CarouselView;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Locale;
 
 import androidx.appcompat.app.ActionBar;
@@ -56,15 +57,16 @@ public class GameDetail extends AppCompatActivity {
     }
 
     private void bindwithGameVO() {
+        HashMap<String, Object> params = (HashMap<String, Object>) prevIntent.getSerializableExtra("params");
         gameVO = gameViewModel.getGameVO();
-        gameTitle.setText(gameVO.getName());
-        gameDeveloper.setText(gameVO.getDeveloper());
+        gameTitle.setText((String) params.get("name"));
+        gameDeveloper.setText((String) params.get("developer"));
         gameIntroduction.setText(gameVO.getGameInformation());
         investmentIntroduction.setText(gameVO.getInvestmentInformation());
         investmentCondition.setText(gameVO.getInvestmentCondition());
         companyIntroduction.setText(gameVO.getCompanyIntroduction());
         goalPrice.setText(String.format(Locale.KOREA, "목표 금액 %,d원", gameVO.getGoalPrice()));
-        currentPrice.setText(String.format(Locale.KOREA, "현재 %,d원 (%.0f %%)", gameVO.getCurrentPrice(), ((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100));
+        currentPrice.setText(String.format(Locale.KOREA, "현재 %,d원 (%.1f %%)", gameVO.getCurrentPrice(), ((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100));
     }
 
     private void setHeaderImage() {
