@@ -54,7 +54,6 @@ public class LoginLoadingActivity extends AppCompatActivity {
 
         Intent resultIntent = new Intent();
 
-        // Todo 로그인 로직 구현
         String url = "http://117.17.102.139:8080/validateAccount";
         LoginTask task = new LoginTask(url, email, HashService.sha256(password));
         try {
@@ -69,7 +68,6 @@ public class LoginLoadingActivity extends AppCompatActivity {
                         .setPositiveButton("확인", this::onClickDialog);
                 builder.create().show();
             } else {
-                // Todo 똑같이 AuthVO임. Room에 담을 것.
                 addDB(resultCode);
                 ProfileManager profileManager = new ProfileManager();
                 String loginKey = profileManager.getLoginKey(this);

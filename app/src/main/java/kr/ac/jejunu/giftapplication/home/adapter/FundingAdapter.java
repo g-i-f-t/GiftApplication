@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -53,6 +54,7 @@ public class FundingAdapter extends RecyclerView.Adapter {
         fundingViewHolder.getGameName().setText(fundingList.get(position).getName());
         fundingViewHolder.getDeveloper().setText(fundingList.get(position).getDeveloper());
         double percentage = (fundingList.get(position).getGoalPrice() != 0.0f ? ((double) fundingList.get(position).getCurrentPrice() / (double) fundingList.get(position).getGoalPrice()) * 100 : 0.0f);
+        fundingViewHolder.itemProgress.setProgress((int) percentage);
         fundingViewHolder.getInvestmentPercentage().setText(String.format(Locale.KOREAN, "%.0f%%", percentage));
         if(position == 0)
             fundingViewHolder.getFundingLayout().setMinHeight(360);
@@ -72,6 +74,7 @@ public class FundingAdapter extends RecyclerView.Adapter {
         private TextView gameName, investmentPercentage, developer;
         private ConstraintLayout fundingLayout;
         private ImageView gameImage;
+        private ProgressBar itemProgress;
         FundingViewHolder(@NonNull View itemView) {
             super(itemView);
             gameName = itemView.findViewById(R.id.funding_game_name);
@@ -79,6 +82,7 @@ public class FundingAdapter extends RecyclerView.Adapter {
             fundingLayout = itemView.findViewById(R.id.funding_item_layout);
             gameImage = itemView.findViewById(R.id.funding_game_image);
             investmentPercentage = itemView.findViewById(R.id.investment_percentage);
+            itemProgress = itemView.findViewById(R.id.item_progress);
         }
         TextView getGameName() { return gameName; }
         ConstraintLayout getFundingLayout() {
@@ -93,6 +97,10 @@ public class FundingAdapter extends RecyclerView.Adapter {
 
         public TextView getDeveloper() {
             return developer;
+        }
+
+        public ProgressBar getItemProgress() {
+            return itemProgress;
         }
     }
 

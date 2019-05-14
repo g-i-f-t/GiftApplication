@@ -58,7 +58,6 @@ public class IntroductionActivity extends AppCompatActivity {
     }
 
     private void signUp(View view) {
-        // Todo 회원가입 로직 구현
         Intent intent = new Intent(this, SignUpActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
@@ -79,7 +78,6 @@ public class IntroductionActivity extends AppCompatActivity {
     public void start(View v) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        // TODO 액티비티 실행 후 다시는 이 액티비티를 안보이게 차단하게!
         finish();
     }
 }

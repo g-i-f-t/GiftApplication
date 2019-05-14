@@ -37,7 +37,7 @@ public class ProfileManager {
     public String getLoginKey(Context context) {
         User user = new User();
         UserDao roomUserDao = AppDatabase.getInstance(context).roomUserDao();
-        //TODO Room에서 get, user정보가 있을경우 서버로 로그인 요청
+        // Room에서 get, user정보가 있을경우 서버로 로그인 요청
         String LoginKey = null;
         try {
             LoginKey = new RoomLog.getDBTask(roomUserDao).execute(user).get();

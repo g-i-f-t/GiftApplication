@@ -17,8 +17,6 @@ public class GiftApplication extends Application {
         this.profile = profile;
     }
     public Profile userInfo() {
-        // Todo
-
         return profile;
     }
 

@@ -34,7 +34,7 @@ import kr.ac.jejunu.giftapplication.vo.AuthVO;
 public class Login_API2 extends AppCompatActivity {
     private TextView tv_outPut;
 
-    //TODO form에서 입력했던 사용자 정보들을 Room에 저장하고 서버에 POST로 보내기
+    //form에서 입력했던 사용자 정보들을 Room에 저장하고 서버에 POST로 보내기
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +77,6 @@ public class Login_API2 extends AppCompatActivity {
         try {
             AuthVO result = netWorkTask.execute().get();
             if(result != null) {
-                // Todo result에 user_seq_no 하고 access_token 들어있음.
                 tv_outPut.setText(result.getAccess_token() != null ? result.getAccess_token() : "" + ", " + result.getUser_seq_no() != null ? result.getUser_seq_no() : "" );
 
                 if(result.getCode() == 401)

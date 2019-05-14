@@ -45,7 +45,6 @@ public class SplashActivity extends AppCompatActivity {
     private void LogSearch() {
         String LoginKey = profileManager.getLoginKey(this);
         if (LoginKey != null) {
-            //TODO server와 통신
             profileManager.getProfile(LoginKey, getApplication());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

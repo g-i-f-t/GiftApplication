@@ -35,7 +35,6 @@ public class NewsFeedFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewsfeedViewModel.class);
-        // TODO: Use the ViewModel
 
 
     }

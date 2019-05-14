@@ -23,7 +23,6 @@ import kr.ac.jejunu.giftapplication.vo.GameVO;
 
 public class GameViewModel {
     GameVO getGameVO(Long id) {
-        // TODO: Network Call. 지금은 임시더미
         String uri = "http://117.17.102.139:8080/game/" + id;
         GameDetailTask gameDetailTask = new GameDetailTask(uri);
         GameVO gameVO = null;
