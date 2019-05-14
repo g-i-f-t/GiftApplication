@@ -51,6 +51,8 @@ public class SplashActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
         if (LoginKey != null) {
             //TODO server와 통신
@@ -131,16 +133,15 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(User... users) {
-            long id = 1;
-            for(User user: users)
-                roomUserDao.get(id);
-            final String result = roomUserDao.getAll().get(0).getUserSeqNo();
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-                }
-            });
+//            long id = 1;
+//            for(User user: users)
+//                roomUserDao.get(id);
+            String result = null;
+            try {
+                result = roomUserDao.get(0).getUserSeqNo();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return result;
         }
     }

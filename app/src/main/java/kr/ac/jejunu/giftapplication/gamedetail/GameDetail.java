@@ -92,7 +92,7 @@ public class GameDetail extends AppCompatActivity {
 
     private void bindwithGameVO() {
         HashMap<String, Object> params = (HashMap<String, Object>) prevIntent.getSerializableExtra("params");
-        gameVO = gameViewModel.getGameVO();
+        gameVO = gameViewModel.getGameVO((Long) params.get("id"));
         gameTitle.setText((String) params.get("name"));
         gameDeveloper.setText((String) params.get("developer"));
         gameIntroduction.setText(gameVO.getGameInformation());
