@@ -1,15 +1,27 @@
 package kr.ac.jejunu.giftapplication.login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import kr.ac.jejunu.giftapplication.GiftApplication;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.Room.AppDatabase;
+import kr.ac.jejunu.giftapplication.Room.UserDao;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
+import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
+import kr.ac.jejunu.giftapplication.signup.Login_API2;
+import kr.ac.jejunu.giftapplication.splash.ProfileManager;
+import kr.ac.jejunu.giftapplication.splash.RoomLog;
+import kr.ac.jejunu.giftapplication.splash.SplashActivity;
 import kr.ac.jejunu.giftapplication.vo.AuthVO;
+import kr.ac.jejunu.giftapplication.vo.LoginVO;
+import kr.ac.jejunu.giftapplication.vo.Profile;
+import kr.ac.jejunu.giftapplication.vo.User;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -58,6 +70,10 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 builder.create().show();
             } else {
                 // Todo 똑같이 AuthVO임. Room에 담을 것.
+                addDB(resultCode);
+                ProfileManager profileManager = new ProfileManager();
+                String loginKey = profileManager.getLoginKey(this);
+                profileManager.getProfile(loginKey, getApplication());
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -80,8 +96,20 @@ public class LoginLoadingActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        }, 3000);
+    }
 
-
+    private void addDB(AuthVO resultCode) {
+        User user = new User();
+        user.setAccessToken(resultCode.getAccess_token());
+        user.setUserSeqNo(resultCode.getUser_seq_no());
+        UserDao roomUserDao = AppDatabase.getInstance(this).roomUserDao();
+        try {
+            new RoomLog.addDBTask(roomUserDao).execute(user).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void onClickDialog(DialogInterface dialogInterface, int i) {
@@ -155,7 +183,22 @@ public class LoginLoadingActivity extends AppCompatActivity {
 
             return result;
         }
-
-
     }
+    private class AccessDBTask extends AsyncTask<User, Void, Void> {
+        private final UserDao roomUserDao;
+
+        public AccessDBTask(UserDao roomUserDao) {
+            this.roomUserDao = roomUserDao;
+        }
+
+        @Override
+        protected Void doInBackground(User... users) {
+            for(User user: users)
+                roomUserDao.add(user);
+            final String result = roomUserDao.getAll().get(0).getAccessToken();
+
+            return null;
+        }
+    }
+
 }

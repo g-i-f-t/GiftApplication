@@ -25,52 +25,28 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
-import kr.ac.jejunu.giftapplication.GiftApplication;
 import kr.ac.jejunu.giftapplication.Room.AppDatabase;
 import kr.ac.jejunu.giftapplication.Room.UserDao;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
 import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
-import kr.ac.jejunu.giftapplication.vo.AuthVO;
 import kr.ac.jejunu.giftapplication.vo.LoginVO;
-import kr.ac.jejunu.giftapplication.vo.Profile;
 import kr.ac.jejunu.giftapplication.vo.User;
 
 public class SplashActivity extends AppCompatActivity {
+    private ProfileManager profileManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        profileManager = new ProfileManager();
+        LogSearch();
+    }
 
-        User user = new User();
-        UserDao roomUserDao = AppDatabase.getInstance(this).roomUserDao();
-        AccessDBTask task = new AccessDBTask(roomUserDao);
-        //TODO Room에서 get, Token이 있을경우 서버로 로그인 요청
-        String LoginKey = null;
-        try {
-            LoginKey = task.execute(user).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
+    private void LogSearch() {
+        String LoginKey = profileManager.getLoginKey(this);
         if (LoginKey != null) {
             //TODO server와 통신
-            String url = "http://117.17.102.139:8080/account/"+LoginKey;
-            NetWorkTask netWorkTask = new NetWorkTask(url);
-            LoginVO result = null;
-            try {
-                result = netWorkTask.execute().get();
-                if(result.getCode() == 200){
-                    Profile profile = new Profile();
-                    profile.setName(result.getName());
-                    profile.setEmail(result.getEmail());
-
-                    ((GiftApplication) getApplication()).setUserInfo(profile);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            profileManager.getProfile(LoginKey, getApplication());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -80,6 +56,9 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         }
     }
+
+
+
     public static class NetWorkTask extends AsyncTask<Void, Void, LoginVO> {
         private String url;
 
@@ -123,26 +102,4 @@ public class SplashActivity extends AppCompatActivity {
             return result;
         }
     }
-    private class AccessDBTask extends AsyncTask<User, Void, String> {
-        private final UserDao roomUserDao;
-
-        public AccessDBTask(UserDao roomUserDao) {
-            this.roomUserDao = roomUserDao;
-        }
-
-        @Override
-        protected String doInBackground(User... users) {
-//            long id = 1;
-//            for(User user: users)
-//                roomUserDao.get(id);
-            String result = null;
-            try {
-                result = roomUserDao.getAll().get(0).getUserSeqNo();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
-    }
-
 }
