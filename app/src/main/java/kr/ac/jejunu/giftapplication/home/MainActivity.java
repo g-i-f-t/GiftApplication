@@ -55,7 +55,12 @@ public class MainActivity extends AppCompatActivity
         super.setContentView(layoutResID);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        openFragment(NewsFeedFragment.newInstance());
+        if(getIntent().getBooleanExtra("onPurchased", false)) {
+            openFragment(FundingListFragment.newInstance());
+        } else {
+            openFragment(NewsFeedFragment.newInstance());
+        }
+
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.home_tab_newsfeed:

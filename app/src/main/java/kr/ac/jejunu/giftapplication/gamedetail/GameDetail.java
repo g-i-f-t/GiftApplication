@@ -6,6 +6,7 @@
 
 package kr.ac.jejunu.giftapplication.gamedetail;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -67,6 +68,7 @@ public class GameDetail extends AppCompatActivity {
         setButtonTransition();
         mButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, InvestmentAgreementActivity.class);
+            intent.putExtra("id", gameVO.getGameId());
             startActivity(intent);
         });
 
