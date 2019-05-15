@@ -68,7 +68,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
                         .setPositiveButton("확인", this::onClickDialog);
                 builder.create().show();
             } else {
-                addDB(resultCode);
+                //why ADD? 앱이 삭제됐을 경우를 가정, Room에는 data가 존재하지 않기 때문!
+                addDB(resultCode); //room
                 ProfileManager profileManager = new ProfileManager();
                 String loginKey = profileManager.getLoginKey(this);
                 profileManager.getProfile(loginKey, getApplication());

@@ -15,7 +15,7 @@ import kr.ac.jejunu.giftapplication.vo.User;
 public class ProfileManager {
     public ProfileManager() {
     }
-
+    //해당 User의 시퀀스 넘버에 대한 userName과 userEmail을 반환
     public void getProfile(String loginKey, Application application) {
         String url = "http://117.17.102.139:8080/account/" + loginKey;
         SplashActivity.NetWorkTask netWorkTask = new SplashActivity.NetWorkTask(url);
@@ -33,7 +33,7 @@ public class ProfileManager {
             e.printStackTrace();
         }
     }
-
+    //RoomDB에 저장된 시퀀스넘버 반환
     public String getLoginKey(Context context) {
         User user = new User();
         UserDao roomUserDao = AppDatabase.getInstance(context).roomUserDao();

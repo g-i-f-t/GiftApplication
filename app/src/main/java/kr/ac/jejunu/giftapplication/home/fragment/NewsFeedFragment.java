@@ -27,8 +27,8 @@ public class NewsFeedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.newsfeed_fragment, container, false);
 
+        return inflater.inflate(R.layout.newsfeed_fragment, container, false);
     }
 
     @Override
@@ -36,6 +36,7 @@ public class NewsFeedFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewsfeedViewModel.class);
 
+        String result = mViewModel.getNews();
 
     }
 

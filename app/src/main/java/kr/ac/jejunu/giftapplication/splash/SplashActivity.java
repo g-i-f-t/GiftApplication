@@ -45,6 +45,7 @@ public class SplashActivity extends AppCompatActivity {
     private void LogSearch() {
         String LoginKey = profileManager.getLoginKey(this);
         if (LoginKey != null) {
+            //Room에 유저 정보가 있다면 goMain!
             profileManager.getProfile(LoginKey, getApplication());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
