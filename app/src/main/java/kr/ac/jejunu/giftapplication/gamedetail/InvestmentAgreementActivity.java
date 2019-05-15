@@ -29,6 +29,8 @@ public class InvestmentAgreementActivity extends AppCompatActivity {
 
     private void onClick(View view) {
         Intent intent = new Intent(this, PurchaseActivity.class);
+        Long gameId = getIntent().getLongExtra("id", 0);
+        intent.putExtra("id", gameId);
         startActivity(intent);
     }
 

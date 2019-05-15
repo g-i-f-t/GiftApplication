@@ -69,7 +69,6 @@ public class GameViewModel {
                     buffer.append(line);
                     buffer.append("\n");
                 }
-                System.out.println(buffer.toString());
                 Gson gson = new Gson();
                 Type type = new TypeToken<GameVO>() {
                 }.getType();
