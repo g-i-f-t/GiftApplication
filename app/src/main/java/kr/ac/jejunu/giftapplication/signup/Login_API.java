@@ -92,8 +92,6 @@ public class Login_API extends AppCompatActivity {
         });
         webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(uri.toString(), headers);
-
-
     }
 
 

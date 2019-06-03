@@ -1,11 +1,14 @@
 package kr.ac.jejunu.giftapplication.splash;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 
 import java.util.concurrent.ExecutionException;
 
 import kr.ac.jejunu.giftapplication.GiftApplication;
+import kr.ac.jejunu.giftapplication.NetworkTask;
 import kr.ac.jejunu.giftapplication.Room.AppDatabase;
 import kr.ac.jejunu.giftapplication.Room.UserDao;
 import kr.ac.jejunu.giftapplication.vo.LoginVO;
@@ -16,10 +19,10 @@ public class ProfileManager {
     public ProfileManager() {
     }
     //해당 User의 시퀀스 넘버에 대한 userName과 userEmail을 반환
-    public void getProfile(String loginKey, Application application) {
+    public void getProfile(String loginKey, Activity activity) {
         String url = "http://117.17.102.139:8080/account/" + loginKey;
-        SplashActivity.NetWorkTask netWorkTask = new SplashActivity.NetWorkTask(url);
-        LoginVO result = null;
+        NetworkTask netWorkTask = new NetworkTask(url, activity);
+        LoginVO result;
         try {
             result = netWorkTask.execute().get();
             if (result.getCode() == 200) {
@@ -27,10 +30,14 @@ public class ProfileManager {
                 profile.setName(result.getName());
                 profile.setEmail(result.getEmail());
 
-                ((GiftApplication) application).setUserInfo(profile);
+                ((GiftApplication) activity.getApplication()).setUserInfo(profile);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            activity.runOnUiThread(() -> {
+                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                alert.setMessage("GIFT서버와 연결이 되지 않습니다!");
+                alert.show();
+            });
         }
     }
     //RoomDB에 저장된 시퀀스넘버 반환
