@@ -20,6 +20,7 @@ import java.util.HashMap;
 public class SignUpActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar actionBar;
+    AlertDialog.Builder alert = showAlert();
 
     EditText et_email, et_pw, et_pw_chk, et_name;
     String email, password, password_chk, name;
@@ -56,13 +57,11 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
             else {
-                AlertDialog.Builder alert = showAlert();
                 alert.setMessage("비밀번호를 확인해주십시오.");
                 alert.show();
             }
         }
         else {
-            AlertDialog.Builder alert = showAlert();
             alert.setMessage("양식에 맞게 입력해주세요.");
             alert.show();
         }
