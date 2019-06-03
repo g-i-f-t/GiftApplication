@@ -33,8 +33,12 @@ public class RoomLog {
 
         @Override
         protected String doInBackground(User... users) {
-            final String result = roomUserDao.getAll().get(0).getUserSeqNo();
-
+            String result = null;
+            try {
+                result = roomUserDao.getAll().get(0).getUserSeqNo();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return result;
         }
     }

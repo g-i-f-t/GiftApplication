@@ -72,11 +72,13 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 addDB(resultCode); //room
                 ProfileManager profileManager = new ProfileManager();
                 String loginKey = profileManager.getLoginKey(this);
-                profileManager.getProfile(loginKey, this);
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
+                profileManager.getProfile(loginKey, this, () -> {
+                    Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                });
+
             }
         } catch (ExecutionException e) {
             e.printStackTrace();

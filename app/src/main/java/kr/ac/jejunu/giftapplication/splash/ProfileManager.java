@@ -1,7 +1,6 @@
 package kr.ac.jejunu.giftapplication.splash;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 
@@ -16,12 +15,21 @@ import kr.ac.jejunu.giftapplication.vo.Profile;
 import kr.ac.jejunu.giftapplication.vo.User;
 
 public class ProfileManager {
+    private NetworkTask netWorkTask;
     public ProfileManager() {
     }
+
+    public interface Callback {
+        public void callback();
+    }
+
+    public void stopTask() {
+        if(!netWorkTask.isCancelled()) netWorkTask.cancel(true);
+    }
     //해당 User의 시퀀스 넘버에 대한 userName과 userEmail을 반환
-    public void getProfile(String loginKey, Activity activity) {
+    public void getProfile(String loginKey, Activity activity, ProfileManager.Callback callback) {
         String url = "http://117.17.102.139:8080/account/" + loginKey;
-        NetworkTask netWorkTask = new NetworkTask(url, activity);
+        netWorkTask = new NetworkTask(url, activity);
         LoginVO result;
         try {
             result = netWorkTask.execute().get();
@@ -31,13 +39,10 @@ public class ProfileManager {
                 profile.setEmail(result.getEmail());
 
                 ((GiftApplication) activity.getApplication()).setUserInfo(profile);
+                callback.callback();
             }
         } catch (Exception e) {
-            activity.runOnUiThread(() -> {
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setMessage("GIFT서버와 연결이 되지 않습니다!");
-                alert.show();
-            });
+            e.printStackTrace();
         }
     }
     //RoomDB에 저장된 시퀀스넘버 반환
@@ -51,8 +56,6 @@ public class ProfileManager {
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
         return LoginKey;

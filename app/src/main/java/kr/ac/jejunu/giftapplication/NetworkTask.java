@@ -3,6 +3,7 @@ package kr.ac.jejunu.giftapplication;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
@@ -17,6 +18,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import kr.ac.jejunu.giftapplication.splash.SplashActivity;
 import kr.ac.jejunu.giftapplication.vo.LoginVO;
@@ -40,12 +43,23 @@ public class NetworkTask extends AsyncTask<Void, Void, LoginVO> {
             HttpURLConnection connection = null;
             try {
                 connection = (HttpURLConnection) uri.openConnection();
-            } catch (ConnectException e) {
-                activity.runOnUiThread(() -> {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                    alert.setMessage("GIFT서버와 연결이 되지 않습니다!");
-                    alert.show();
-                });
+            } catch (Exception e) {
+//                activity.runOnUiThread(new Runnable() {
+////                    AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+////                    @Override
+////                    public void run() {
+////                        alert.setTitle("알림");
+////                        alert.setMessage("GIFT서버와 연결이 되지 않습니다!");
+////                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+////                            @Override
+////                            public void onClick(DialogInterface dialog, int which) {
+////                                dialog.dismiss();     //닫기
+////                            }
+////                        });
+////                        alert.show();
+////                    }
+////               });
+                  e.printStackTrace();
             }
             connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json");
