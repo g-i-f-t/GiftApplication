@@ -57,6 +57,7 @@ public class AvailableFundingFragment extends Fragment {
         fundingRecyclerView.setLayoutManager(layoutManager);
         RecyclerView.Adapter fundingAdapter = new FundingAdapter(mViewModel.getFundingList(), this::transition);
         fundingRecyclerView.setAdapter(fundingAdapter);
+
     }
 
     private void transition(ImageView view, GameVO game) {

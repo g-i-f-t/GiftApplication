@@ -41,7 +41,7 @@ import java.util.concurrent.ExecutionException;
 public class LoginLoadingActivity extends AppCompatActivity {
     private String email;
     private String password;
-
+    private LoginTask loginTask;
     // 이거는 임시 이메일 패스워드;
     private final String tempEmail = "foo@ex";
     private final String tempPassword = "1234";
@@ -55,9 +55,9 @@ public class LoginLoadingActivity extends AppCompatActivity {
         Intent resultIntent = new Intent();
 
         String url = "http://117.17.102.139:8080/validateAccount";
-        LoginTask task = new LoginTask(url, email, HashService.sha256(password));
+        loginTask = new LoginTask(url, email, HashService.sha256(password));
         try {
-            AuthVO resultCode = task.execute().get();
+            AuthVO resultCode = loginTask.execute().get();
             if(resultCode == null || resultCode.getCode() != 200) {
                 if(resultCode != null)
                     System.out.println("안돼" + resultCode.getMessages());
@@ -83,18 +83,11 @@ public class LoginLoadingActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
 
-        //        new Handler().postDelayed(() -> {
-//            Snackbar.make(getWindow().getDecorView().getRootView(), "넌 틀려먹었어", Snackbar.LENGTH_SHORT).show();
-//            if(email.equals(tempEmail) && password.equals(tempPassword)) {
-//                // Todo 로그인 로직 구현하기! 이부분!
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            } else {
-//                finish();
-//            }
-//        }, 3000);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void addDB(AuthVO resultCode) {
