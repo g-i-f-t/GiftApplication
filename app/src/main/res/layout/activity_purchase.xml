@@ -24,6 +24,7 @@
         android:layout_marginStart="24dp"
         android:ems="10"
         android:hint="예) 10000"
+        android:digits="0123456789"
         android:inputType="numberDecimal"
         android:textAlignment="textEnd"
         android:textColor="@android:color/black"

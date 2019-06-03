@@ -16,7 +16,7 @@ public class GameVO implements Serializable {
     private String investmentCondition;
     private String companyIntroduction;
     private String profileImage;
-    private List<String> describeImageList;
+    private List<GameDescribeImagesVO> gameDescribeImages;
 
     public Long getGameId() {
         return gameId;
@@ -114,11 +114,11 @@ public class GameVO implements Serializable {
         return profileImage;
     }
 
-    public List<String> getDescribeImageList() {
-        return describeImageList;
+    public List<GameDescribeImagesVO> getGameDescribeImages() {
+        return gameDescribeImages;
     }
 
-    public void setDescribeImageList(List<String> describeImageList) {
-        this.describeImageList = describeImageList;
+    public void setGameDescribeImages(List<GameDescribeImagesVO> gameDescribeImages) {
+        this.gameDescribeImages = gameDescribeImages;
     }
 }

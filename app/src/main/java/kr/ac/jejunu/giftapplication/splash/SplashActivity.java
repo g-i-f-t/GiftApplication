@@ -35,11 +35,8 @@ public class SplashActivity extends AppCompatActivity {
         alert = new AlertDialog.Builder(this);
         alert.setTitle("알림");
         alert.setMessage("GIFT서버와 연결이 되지 않습니다!");
-        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();     //닫기
-            }
+        alert.setPositiveButton("확인", (dialog, which) -> {
+            dialog.dismiss();     //닫기
         });
     }
 
@@ -52,7 +49,6 @@ public class SplashActivity extends AppCompatActivity {
                     public void run() {
                         profileManager.stopTask();
                         runOnUiThread(() -> alert.show());
-
                     }
                 }, 5000); // 5초가 마지노선.
                 //Room에 유저 정보가 있다면 goMain!
@@ -62,7 +58,6 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 });
-
             }
             else  {
                 Intent intent = new Intent(this, IntroductionActivity.class);
