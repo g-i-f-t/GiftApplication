@@ -22,7 +22,6 @@ public class ProfileManager {
     public interface Callback {
         public void callback();
     }
-
     public void stopTask() {
         if(!netWorkTask.isCancelled()) netWorkTask.cancel(true);
     }
@@ -32,13 +31,13 @@ public class ProfileManager {
         netWorkTask = new NetworkTask(url, activity);
         LoginVO result;
         try {
-            result = netWorkTask.execute().get();
-            if (result.getCode() == 200) {
-                Profile profile = new Profile();
-                profile.setName(result.getName());
-                profile.setEmail(result.getEmail());
+                    result = netWorkTask.execute().get();
+                    if (result.getCode() == 200) {
+                        Profile profile = new Profile();
+                        profile.setName(result.getName());
+                        profile.setEmail(result.getEmail());
 
-                ((GiftApplication) activity.getApplication()).setUserInfo(profile);
+                        ((GiftApplication) activity.getApplication()).setUserInfo(profile);
                 callback.callback();
             }
         } catch (Exception e) {
