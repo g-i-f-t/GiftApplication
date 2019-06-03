@@ -3,7 +3,19 @@ package kr.ac.jejunu.giftapplication.splash;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.AsyncTask;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
 import kr.ac.jejunu.giftapplication.GiftApplication;
@@ -42,6 +54,14 @@ public class ProfileManager {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if(netWorkTask.getStatus() == AsyncTask.Status.RUNNING) {
+                try {
+                    netWorkTask.cancel(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
     //RoomDB에 저장된 시퀀스넘버 반환
@@ -58,5 +78,49 @@ public class ProfileManager {
             e.printStackTrace();
         }
         return LoginKey;
+    }
+
+    class NetWorkTask extends AsyncTask<Void, Void, LoginVO> {
+        private String url;
+
+        public NetWorkTask(String url) {
+            this.url = url;
+        }
+        //execute한 후에 백그라운드 쓰레드에서 호출됨
+
+        @Override
+        protected  LoginVO doInBackground(Void... params) {
+            LoginVO result = null;
+            try {
+                URL uri = new URL(url);
+
+                HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+                connection.setRequestMethod("GET");
+//                connection.setRequestProperty("Content-Type", "application/json");
+//                connection.setRequestProperty("charset", "UTF-8");
+//                connection.setUseCaches(false);
+
+                InputStream is = connection.getInputStream();
+
+                StringBuilder builder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                    builder.append('\n');
+                }
+
+                result = new Gson().fromJson(builder.toString(), LoginVO.class);
+                connection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
     }
 }

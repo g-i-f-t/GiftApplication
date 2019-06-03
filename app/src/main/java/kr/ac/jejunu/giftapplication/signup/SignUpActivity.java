@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class SignUpActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar actionBar;
-    AlertDialog.Builder alert = showAlert();
+    AlertDialog.Builder alert;
 
     EditText et_email, et_pw, et_pw_chk, et_name;
     String email, password, password_chk, name;
@@ -29,11 +29,6 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
-        et_email = (EditText) findViewById(R.id.login_id_editText);
-        et_pw = (EditText) findViewById(R.id.login_pwd_editText);
-        et_pw_chk = (EditText) findViewById(R.id.login_pwd_chk_editText);
-        et_name = (EditText) findViewById(R.id.login_name_editText);
     }
 
     public void load_Api(View view) {
@@ -81,7 +76,11 @@ public class SignUpActivity extends AppCompatActivity {
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         toolbar = findViewById(R.id.login_toolbar);
-
+        alert = showAlert();
+        et_email = findViewById(R.id.login_id_editText);
+        et_pw = findViewById(R.id.login_pwd_editText);
+        et_pw_chk = findViewById(R.id.login_pwd_chk_editText);
+        et_name = findViewById(R.id.login_name_editText);
         setToolBar();
     }
 

@@ -1,27 +1,10 @@
 package kr.ac.jejunu.giftapplication.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-import kr.ac.jejunu.giftapplication.GiftApplication;
-import kr.ac.jejunu.giftapplication.R;
-import kr.ac.jejunu.giftapplication.Room.AppDatabase;
-import kr.ac.jejunu.giftapplication.Room.UserDao;
-import kr.ac.jejunu.giftapplication.home.MainActivity;
-import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
-import kr.ac.jejunu.giftapplication.signup.Login_API2;
-import kr.ac.jejunu.giftapplication.splash.ProfileManager;
-import kr.ac.jejunu.giftapplication.splash.RoomLog;
-import kr.ac.jejunu.giftapplication.splash.SplashActivity;
-import kr.ac.jejunu.giftapplication.vo.AuthVO;
-import kr.ac.jejunu.giftapplication.vo.LoginVO;
-import kr.ac.jejunu.giftapplication.vo.Profile;
-import kr.ac.jejunu.giftapplication.vo.User;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -38,10 +21,20 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
+import androidx.appcompat.app.AppCompatActivity;
+import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.Room.AppDatabase;
+import kr.ac.jejunu.giftapplication.Room.UserDao;
+import kr.ac.jejunu.giftapplication.home.MainActivity;
+import kr.ac.jejunu.giftapplication.splash.ProfileManager;
+import kr.ac.jejunu.giftapplication.splash.RoomLog;
+import kr.ac.jejunu.giftapplication.vo.AuthVO;
+import kr.ac.jejunu.giftapplication.vo.User;
+
 public class LoginLoadingActivity extends AppCompatActivity {
     private String email;
     private String password;
-
+    private LoginTask loginTask;
     // 이거는 임시 이메일 패스워드;
     private final String tempEmail = "foo@ex";
     private final String tempPassword = "1234";
@@ -55,9 +48,9 @@ public class LoginLoadingActivity extends AppCompatActivity {
         Intent resultIntent = new Intent();
 
         String url = "http://117.17.102.139:8080/validateAccount";
-        LoginTask task = new LoginTask(url, email, HashService.sha256(password));
+        loginTask = new LoginTask(url, email, HashService.sha256(password));
         try {
-            AuthVO resultCode = task.execute().get();
+            AuthVO resultCode = loginTask.execute().get();
             if(resultCode == null || resultCode.getCode() != 200) {
                 if(resultCode != null)
                     System.out.println("안돼" + resultCode.getMessages());
@@ -85,18 +78,11 @@ public class LoginLoadingActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
 
-        //        new Handler().postDelayed(() -> {
-//            Snackbar.make(getWindow().getDecorView().getRootView(), "넌 틀려먹었어", Snackbar.LENGTH_SHORT).show();
-//            if(email.equals(tempEmail) && password.equals(tempPassword)) {
-//                // Todo 로그인 로직 구현하기! 이부분!
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            } else {
-//                finish();
-//            }
-//        }, 3000);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void addDB(AuthVO resultCode) {

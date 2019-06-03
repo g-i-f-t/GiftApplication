@@ -9,30 +9,14 @@ package kr.ac.jejunu.giftapplication.splash;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-
-import com.google.gson.Gson;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.ConnectException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import androidx.appcompat.app.AppCompatActivity;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
 import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
-import kr.ac.jejunu.giftapplication.signup.SignUpActivity;
-import kr.ac.jejunu.giftapplication.vo.LoginVO;
 
 public class SplashActivity extends AppCompatActivity {
     private ProfileManager profileManager;
@@ -51,11 +35,8 @@ public class SplashActivity extends AppCompatActivity {
         alert = new AlertDialog.Builder(this);
         alert.setTitle("알림");
         alert.setMessage("GIFT서버와 연결이 되지 않습니다!");
-        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();     //닫기
-            }
+        alert.setPositiveButton("확인", (dialog, which) -> {
+            dialog.dismiss();     //닫기
         });
     }
 
@@ -75,7 +56,6 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 });
-
             }
             else  {
                 Intent intent = new Intent(this, IntroductionActivity.class);

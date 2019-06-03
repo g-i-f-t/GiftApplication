@@ -46,14 +46,12 @@ public class GetFundingTask extends AsyncTask<Void, Void, List<GameVO>> {
                 builder.append(line);
                 builder.append('\n');
             }
-
             Gson gson = new Gson();
             Type type = new TypeToken<List<GameVO>>() {
             }.getType();
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(builder.toString()).getAsJsonObject().get("data");
             gameVOList = gson.fromJson(element, type);
-            Log.i("내꺼", gameVOList.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

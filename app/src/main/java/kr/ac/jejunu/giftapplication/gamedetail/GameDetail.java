@@ -6,28 +6,21 @@
 
 package kr.ac.jejunu.giftapplication.gamedetail;
 
-import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.synnapps.carouselview.CarouselView;
 
 import java.io.File;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,11 +30,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import kr.ac.jejunu.giftapplication.DownloadImageTask;
 import kr.ac.jejunu.giftapplication.R;
-import kr.ac.jejunu.giftapplication.home.adapter.FundingAdapter;
+import kr.ac.jejunu.giftapplication.vo.GameDescribeImagesVO;
 import kr.ac.jejunu.giftapplication.vo.GameVO;
 
 public class GameDetail extends AppCompatActivity {
-    private GameViewModel gameViewModel;
     private Toolbar toolbar;
     private ActionBar actionBar;
     private ImageView gameImage;
@@ -55,7 +47,6 @@ public class GameDetail extends AppCompatActivity {
     private boolean isBottom = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        gameViewModel = new GameViewModel();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_detail);
         initView();
@@ -68,6 +59,7 @@ public class GameDetail extends AppCompatActivity {
         setButtonTransition();
         mButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, InvestmentAgreementActivity.class);
+            System.out.println("넘어가는 값은" + gameVO.getGameId());
             intent.putExtra("id", gameVO.getGameId());
             startActivity(intent);
         });
@@ -98,11 +90,19 @@ public class GameDetail extends AppCompatActivity {
     }
 
     private void bindwithGameVO() {
-        HashMap<String, Object> params = (HashMap<String, Object>) prevIntent.getSerializableExtra("params");
-        gameVO = gameViewModel.getGameVO((Long) params.get("id"));
+        gameVO = (GameVO) prevIntent.getSerializableExtra("gameVO");
+//        HashMap<String, Object> params = (HashMap<String, Object>) prevIntent.getSerializableExtra("params");
+        // 이미지 리스트 생성
+        List<String> gameDetailImages = new ArrayList<>();
+        for(GameDescribeImagesVO describeImagesVO : gameVO.getGameDescribeImages()) {
+            gameDetailImages.add(describeImagesVO.getDescribeImage());
+        }
+
         double progress = (((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100);
-        gameTitle.setText((String) params.get("name"));
-        gameDeveloper.setText((String) params.get("developer"));
+        gameTitle.setText(gameVO.getName());
+        gameDeveloper.setText(gameVO.getDeveloper());
+//        gameTitle.setText((String) params.get("name"));
+//        gameDeveloper.setText((String) params.get("developer"));
         gameIntroduction.setText(gameVO.getGameInformation());
         investmentIntroduction.setText(gameVO.getInvestmentInformation());
         investmentCondition.setText(gameVO.getInvestmentCondition());
@@ -110,7 +110,7 @@ public class GameDetail extends AppCompatActivity {
         goalPrice.setText(String.format(Locale.KOREA, "목표 금액 %,d원", gameVO.getGoalPrice()));
         fundingProgress.setProgress((int) progress);
         currentPrice.setText(String.format(Locale.KOREA, "현재 %,d원 (%.0f %%)", gameVO.getCurrentPrice(), progress));
-        setCarouselView(gameVO.getDescribeImageList());
+        setCarouselView(gameDetailImages);
     }
 
     private void setHeaderImage() {
