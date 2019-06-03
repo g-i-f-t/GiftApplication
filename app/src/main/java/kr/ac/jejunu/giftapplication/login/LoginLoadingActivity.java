@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
+import kr.ac.jejunu.giftapplication.GiftApplication;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.Room.AppDatabase;
 import kr.ac.jejunu.giftapplication.Room.UserDao;
@@ -63,7 +64,7 @@ public class LoginLoadingActivity extends AppCompatActivity {
             } else {
                 //why ADD? 앱이 삭제됐을 경우를 가정, Room에는 data가 존재하지 않기 때문!
                 addDB(resultCode); //room
-                ProfileManager profileManager = new ProfileManager();
+                ProfileManager profileManager = ((GiftApplication) getApplication()).getProfileManager();
                 String loginKey = profileManager.getLoginKey(this);
                 profileManager.getProfile(loginKey, this, () -> {
                     Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
@@ -71,7 +72,6 @@ public class LoginLoadingActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 });
-
             }
         } catch (ExecutionException e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.Room.UserDao;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
+import kr.ac.jejunu.giftapplication.selectbank.SelectBankActivity;
 import kr.ac.jejunu.giftapplication.splash.ProfileManager;
 import kr.ac.jejunu.giftapplication.splash.RoomLog;
 
@@ -49,16 +50,20 @@ public class PurchaseActivity extends AppCompatActivity {
 
     private void onClick(View view) {
         // Todo Network Call 구매관련.
-        ProfileManager profileManager = new ProfileManager();
-        String willPurchasePrice = priceEditText.getText().toString();
-        String userSeqNo = profileManager.getLoginKey(this);
-        String url = "http://117.17.102.139:8080/game/" + getIntent().getLongExtra("id", 0);
-        new PurchaseTask(url, userSeqNo).execute(willPurchasePrice);
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("onPurchased", true);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent intent = new Intent(this, SelectBankActivity.class);
+        intent.putExtra("id", getIntent().getLongExtra("id", 0));
+        intent.putExtra("price", Long.parseLong(priceEditText.getText().toString()));
         startActivity(intent);
+//        ProfileManager profileManager = new ProfileManager();
+//        String willPurchasePrice = priceEditText.getText().toString();
+//        String userSeqNo = profileManager.getLoginKey(this);
+//        String url = "http://117.17.102.139:8080/game/" + getIntent().getLongExtra("id", 0);
+//        new PurchaseTask(url, userSeqNo).execute(willPurchasePrice);
+//
+//        Intent intent = new Intent(this, MainActivity.class);
+//        intent.putExtra("onPurchased", true);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
 
     }
 
