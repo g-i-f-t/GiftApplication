@@ -6,15 +6,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import kr.ac.jejunu.giftapplication.DownloadImageTask;
 import kr.ac.jejunu.giftapplication.R;
-import kr.ac.jejunu.giftapplication.vo.News;
+import kr.ac.jejunu.giftapplication.vo.NewsVO;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHolder> {
-    private ArrayList<News> GList;
+    private List<NewsVO> newsList;
 
     public  class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView_img;
@@ -29,23 +30,23 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         }
     }
     //생성자
-    public NewsFeedAdapter(ArrayList<News> list) {
-        this.GList = list;
+    public NewsFeedAdapter(List<NewsVO> list) {
+        this.newsList = list;
     }
 
     @NonNull
     @Override
     public NewsFeedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.newsfeed, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_newsfeed, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView_title.setText(String.valueOf(GList.get(position).getTitle()));
-        holder.textView_release.setText(String.valueOf(GList.get(position).getRelease()));
-        holder.texView_director.setText(String.valueOf(GList.get(position).getDeveloper()));
-
+        holder.textView_title.setText(newsList.get(position).getTitle());
+//        holder.textView_release.setText(String.valueOf(GList.get(position).getRelease()));
+        holder.texView_director.setText(newsList.get(position).getDeveloper());
+        new DownloadImageTask(holder.imageView_img).execute(newsList.get(position).getImage());
 //        GlideApp.with(holder.itemView).load(GList.get(position).getImage())
 //                .override(300,400)
 //                .into(holder.imageView_img);
@@ -53,7 +54,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return GList.size();
+        return newsList.size();
     }
 }
 

@@ -10,11 +10,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import androidx.appcompat.app.AppCompatActivity;
+import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.MainActivity;
 import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
 
@@ -22,14 +26,24 @@ public class SplashActivity extends AppCompatActivity {
     private ProfileManager profileManager;
     private AlertDialog.Builder alert;
     private Timer limitLoadingTimer;
+//    private ImageView imgAndroid;
+//    private Animation anim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
         profileManager = new ProfileManager();
         limitLoadingTimer = new Timer();
+//        initView();
         makeAlert();
         LogSearch();
     }
+
+//    private void initView() {
+//        imgAndroid =  findViewById(R.id.loadingView);
+//        anim = AnimationUtils.loadAnimation(this, R.anim.loading);
+//                imgAndroid.setAnimation(anim);
+//    }
 
     private void makeAlert() {
         alert = new AlertDialog.Builder(this);
@@ -57,12 +71,10 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 });
             }
-            else  {
+            else {
                 Intent intent = new Intent(this, IntroductionActivity.class);
                 startActivity(intent);
                 finish();
             }
-
-
     }
 }

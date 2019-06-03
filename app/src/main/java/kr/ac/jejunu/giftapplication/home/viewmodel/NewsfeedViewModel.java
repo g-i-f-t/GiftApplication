@@ -2,8 +2,6 @@ package kr.ac.jejunu.giftapplication.home.viewmodel;
 
 import android.os.AsyncTask;
 
-import com.google.gson.Gson;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,15 +13,14 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
-import kr.ac.jejunu.giftapplication.vo.News;
+import kr.ac.jejunu.giftapplication.vo.NewsVO;
 
 public class NewsfeedViewModel extends ViewModel {
     // TODO: Implement the ViewModel
-    public List<News> getNews() {
+    public List<NewsVO> getNews() {
         String url = "http://www.inven.co.kr/webzine/news/?site=indie";
         NewsFeedTask task = new NewsFeedTask(url);
-        List<News> newsfeedList = new ArrayList<>();
+        List<NewsVO> newsfeedList = new ArrayList<>();
         try {
             newsfeedList = task.execute().get();
         } catch (ExecutionException e) {
@@ -34,7 +31,7 @@ public class NewsfeedViewModel extends ViewModel {
         return newsfeedList;
     }
 
-    private class NewsFeedTask extends AsyncTask<Void, Void, List<News>> {
+    private class NewsFeedTask extends AsyncTask<Void, Void, List<NewsVO>> {
         private final String url;
 
         public NewsFeedTask(String url) {
@@ -42,27 +39,31 @@ public class NewsfeedViewModel extends ViewModel {
         }
 
         @Override
-        protected List<News> doInBackground(Void... voids) {
-            List<News> News = null;
+        protected List<NewsVO> doInBackground(Void... voids) {
+            List<NewsVO> newsList = new ArrayList<>();
             try {
-                Connection.Response response = Jsoup.connect("http://www.inven.co.kr/webzine/news/?site=indie")
+                Connection.Response response = Jsoup.connect(url)
                         .method(Connection.Method.GET)
                         .execute();
                 Document document = response.parse();
 
-               Elements news = document.select("#webzineNewsListF1 > div.list > div > table > tbody > tr");
+                Elements newseles = document.select("#webzineNewsListF1 > div.list > div > table > tbody > tr");
 
-                System.out.println(news.size());
-
-                for(Element elem : news){
+                for (Element elem : newseles) {
                     String title = elem.select("td.left.name > .content > .title > a").text();
-                    System.out.println(title);
+
+                    NewsVO news = new NewsVO();
+                    System.out.println("테스트: " + title);
+                    news.setTitle(title);
+                    news.setDeveloper("테스트개발자");
+                    news.setImage("http://static.inven.co.kr/column/2019/06/03/news/thumb/n16172648351.png");
+                    newsList.add(news);
                 }
-                System.out.println(news.first().html());
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return News;
+            return newsList;
 
         }
     }

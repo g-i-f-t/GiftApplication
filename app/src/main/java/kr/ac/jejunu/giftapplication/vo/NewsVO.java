@@ -1,6 +1,6 @@
 package kr.ac.jejunu.giftapplication.vo;
 
-public class News {
+public class NewsVO {
     private String image;
     private String title;
     private String info;
