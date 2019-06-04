@@ -44,21 +44,6 @@ public class NetworkTask extends AsyncTask<Void, Void, LoginVO> {
             try {
                 connection = (HttpURLConnection) uri.openConnection();
             } catch (Exception e) {
-//                activity.runOnUiThread(new Runnable() {
-////                    AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-////                    @Override
-////                    public void run() {
-////                        alert.setTitle("알림");
-////                        alert.setMessage("GIFT서버와 연결이 되지 않습니다!");
-////                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-////                            @Override
-////                            public void onClick(DialogInterface dialog, int which) {
-////                                dialog.dismiss();     //닫기
-////                            }
-////                        });
-////                        alert.show();
-////                    }
-////               });
                   e.printStackTrace();
             }
             connection.setRequestMethod("GET");

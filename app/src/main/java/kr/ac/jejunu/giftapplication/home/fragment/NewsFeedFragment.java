@@ -25,16 +25,21 @@ public class NewsFeedFragment extends Fragment {
     private NewsfeedViewModel mViewModel;
     private RecyclerView recyclerView;
     private NewsFeedAdapter recyclerAdapter;
+    private List<NewsVO> result;
 
     public static NewsFeedFragment newInstance() {
         return new NewsFeedFragment();
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        result = null;
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-
         View view = inflater.inflate(R.layout.newsfeed_fragment, container, false);
         recyclerView = view.findViewById(R.id.news_feed_recycler_view);
         return view;
@@ -44,8 +49,7 @@ public class NewsFeedFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewsfeedViewModel.class);
-
-        List<NewsVO> result = mViewModel.getNews();
+        if(result == null) result = mViewModel.getNews();
         recyclerAdapter = new NewsFeedAdapter(result);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(recyclerAdapter);

@@ -51,9 +51,11 @@ public class NewsfeedViewModel extends ViewModel {
 
                 for (Element elem : newseles) {
                     String title = elem.select("td.left.name > .content > .title > a").text();
+                    Elements image = elem.select("img[class=banner]");
 
                     NewsVO news = new NewsVO();
                     System.out.println("테스트: " + title);
+                    System.out.println("URLTest " + image);
                     news.setTitle(title);
                     news.setDeveloper("테스트개발자");
                     news.setImage("http://static.inven.co.kr/column/2019/06/03/news/thumb/n16172648351.png");

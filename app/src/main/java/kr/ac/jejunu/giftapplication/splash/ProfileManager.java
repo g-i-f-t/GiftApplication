@@ -99,7 +99,6 @@ public class ProfileManager {
 //                connection.setRequestProperty("Content-Type", "application/json");
 //                connection.setRequestProperty("charset", "UTF-8");
 //                connection.setUseCaches(false);
-
                 InputStream is = connection.getInputStream();
 
                 StringBuilder builder = new StringBuilder();
