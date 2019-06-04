@@ -64,7 +64,6 @@ public class PurchaseActivity extends AppCompatActivity {
 //        intent.putExtra("onPurchased", true);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startActivity(intent);
-
     }
 
     private void setToolbar() {
