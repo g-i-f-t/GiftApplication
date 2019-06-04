@@ -3,7 +3,6 @@ package kr.ac.jejunu.giftapplication.vo;
 public class NewsVO {
     private String image;
     private String title;
-    private String info;
     private String summary;
     private String release;
     private String developer;
@@ -30,14 +29,6 @@ public class NewsVO {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 
     public String getSummary() {
