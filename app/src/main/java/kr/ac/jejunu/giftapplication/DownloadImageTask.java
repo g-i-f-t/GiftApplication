@@ -31,5 +31,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         gameImage.setImageBitmap(bitmap);
+
     }
 }

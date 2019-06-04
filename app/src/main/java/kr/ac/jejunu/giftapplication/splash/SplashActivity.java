@@ -55,7 +55,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void LogSearch() {
-        String LoginKey = profileManager.getLoginKey(this);
+        String LoginKey = profileManager.getLoginKey(this).get("userSeqNo");
             if (LoginKey != null) { // 한번이라도 접속한 적이 있을때. 자동로그인 시도
                 limitLoadingTimer.schedule(new TimerTask() { // 이때 타이머를 재. 왜잴까? 너무 로딩시간이 길면 접속 끊을라고.
                     public void run() {

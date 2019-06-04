@@ -2,6 +2,13 @@ package kr.ac.jejunu.giftapplication.splash;
 
 import android.os.AsyncTask;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import kr.ac.jejunu.giftapplication.Room.UserDao;
 import kr.ac.jejunu.giftapplication.vo.AuthVO;
 import kr.ac.jejunu.giftapplication.vo.User;
@@ -24,7 +31,7 @@ public class RoomLog {
         }
     }
 
-    public static class getDBTask extends AsyncTask<User, Void, String> {
+    public static class getDBTask extends AsyncTask<User, Void, Map<String, String>> {
         private final UserDao roomUserDao;
 
         public getDBTask(UserDao roomUserDao) {
@@ -32,10 +39,11 @@ public class RoomLog {
         }
 
         @Override
-        protected String doInBackground(User... users) {
-            String result = null;
+        protected Map<String, String> doInBackground(User... users) {
+            Map<String ,String > result = new HashMap<>();
             try {
-                result = roomUserDao.getAll().get(0).getUserSeqNo();
+                result.put("userSeqNo" , roomUserDao.getAll().get(0).getUserSeqNo());
+                result.put("accessToken", roomUserDao.getAll().get(0).getAccessToken());
             } catch (Exception e) {
                 e.printStackTrace();
             }

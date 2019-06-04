@@ -51,7 +51,7 @@ public class PurchaseActivity extends AppCompatActivity {
         // Todo Network Call 구매관련.
         ProfileManager profileManager = new ProfileManager();
         String willPurchasePrice = priceEditText.getText().toString();
-        String userSeqNo = profileManager.getLoginKey(this);
+        String userSeqNo = profileManager.getLoginKey(this).get("userSeqNo");
         String url = "http://117.17.102.139:8080/game/" + getIntent().getLongExtra("id", 0);
         new PurchaseTask(url, userSeqNo).execute(willPurchasePrice);
 

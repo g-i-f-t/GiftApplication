@@ -58,6 +58,7 @@ public class NewsfeedViewModel extends ViewModel {
                     System.out.println("URLTest " + image);
                     news.setTitle(title);
                     news.setDeveloper("테스트개발자");
+                    news.setImage(url);
                     news.setImage("http://static.inven.co.kr/column/2019/06/03/news/thumb/n16172648351.png");
                     newsList.add(news);
                 }
