@@ -3,24 +3,41 @@ package kr.ac.jejunu.giftapplication.vo;
 public class NewsVO {
     private String image;
     private String title;
-    private String summary;
-    private String release;
-    private String developer;
+    private String category;
+    private String writer ;
+    private String date;
+    private String url;
 
-    public String getRelease() {
-        return release;
+    public String getUrl() {
+        return url;
     }
 
-    public void setRelease(String release) {
-        this.release = release;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getDeveloper() {
-        return developer;
+    public String getCategory() {
+        return category;
     }
 
-    public void setDeveloper(String developer) {
-        this.developer = developer;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getTitle() {
@@ -31,13 +48,6 @@ public class NewsVO {
         this.title = title;
     }
 
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
 
     public String getImage() {
         return image;

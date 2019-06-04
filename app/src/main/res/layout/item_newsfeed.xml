@@ -2,17 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/news_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/toolbar_shape"
+    android:elevation="2dp"
     app:layout_constraintCircleAngle="0">
 
     <ImageView
         android:id="@+id/imageView_img"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="125dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,46 +26,51 @@
         android:id="@+id/textView_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="7dp"
+        android:autoLink="web"
         android:paddingRight="8dp"
         android:text="게임제목"
         android:textColor="@android:color/black"
         android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_url"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imageView_img"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_release"
+        android:id="@+id/textView_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="게시일"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.926"
-        app:layout_constraintStart_toEndOf="@+id/textView_developer"
-        app:layout_constraintTop_toBottomOf="@+id/textView_title"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView_developer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="72dp"
-        android:text="개발자"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="카테고리"
+        app:layout_constraintBottom_toTopOf="@+id/textView_writer"
         app:layout_constraintStart_toEndOf="@+id/imageView_img"
         app:layout_constraintTop_toBottomOf="@+id/textView_title"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
+    <TextView
+        android:id="@+id/textView_writer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="기자"
+        app:layout_constraintBottom_toTopOf="@+id/textView_date"
+        app:layout_constraintStart_toEndOf="@+id/imageView_img"
+        app:layout_constraintTop_toBottomOf="@+id/textView_category" />
+
+    <TextView
+        android:id="@+id/textView_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="기재 날짜"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView_img"
+        app:layout_constraintTop_toBottomOf="@+id/textView_writer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

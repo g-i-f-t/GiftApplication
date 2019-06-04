@@ -2,6 +2,8 @@ package kr.ac.jejunu.giftapplication.home.fragment;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.WebViewActivity;
 import kr.ac.jejunu.giftapplication.home.adapter.NewsFeedAdapter;
 import kr.ac.jejunu.giftapplication.home.viewmodel.NewsfeedViewModel;
 import kr.ac.jejunu.giftapplication.vo.NewsVO;
@@ -17,6 +20,7 @@ import kr.ac.jejunu.giftapplication.vo.NewsVO;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import java.util.List;
 
@@ -26,6 +30,7 @@ public class NewsFeedFragment extends Fragment {
     private RecyclerView recyclerView;
     private NewsFeedAdapter recyclerAdapter;
     private List<NewsVO> result;
+    private WebView webView;
 
     public static NewsFeedFragment newInstance() {
         return new NewsFeedFragment();
@@ -50,7 +55,11 @@ public class NewsFeedFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewsfeedViewModel.class);
         if(result == null) result = mViewModel.getNews();
-        recyclerAdapter = new NewsFeedAdapter(result);
+        recyclerAdapter = new NewsFeedAdapter(result, url -> {
+            Intent intent = new Intent(getContext(), WebViewActivity.class);
+            intent.putExtra("url" , url);
+            startActivity(intent);
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(recyclerAdapter);
 

@@ -2,6 +2,7 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">www.inven.co.kr</domain>
+        <domain includeSubdomains="true">m.inven.co.kr</domain>
         <domain includeSubdomains="true">static.inven.co.kr</domain>
         <domain includeSubdomains="true">aerain.github.io</domain>
         <domain includeSubdomains="true">117.17.102.139</domain>

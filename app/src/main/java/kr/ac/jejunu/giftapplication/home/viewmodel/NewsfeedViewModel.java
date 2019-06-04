@@ -1,6 +1,9 @@
 package kr.ac.jejunu.giftapplication.home.viewmodel;
 
 import android.os.AsyncTask;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -51,17 +54,25 @@ public class NewsfeedViewModel extends ViewModel {
 
                 for (Element elem : newseles) {
                     String title = elem.select("td.left.name > .content > .title > a").text();
+                    String url = elem.select("td.left.name > .content > .title > a").attr("href");
                     String image = elem.select("img[class=banner]").attr("src");
+                    String[] categorySplit = elem.select("span[class=info]").text().split(" \\| ");
+                    String category = categorySplit[0].trim(); //카테고리
+                    String writer = categorySplit[1].trim(); // 기자
+                    String date = categorySplit[2].trim(); //기재날짜
 
                     NewsVO news = new NewsVO();
-                    System.out.println("테스트: " + title);
-                    System.out.println("URLTest " + image);
+//                    System.out.println("테스트: " + title);
+//                    System.out.println("테스트: " + url);
+//                    System.out.println("URLTest " + image);
                     news.setTitle(title);
-                    news.setDeveloper("테스트개발자");
                     news.setImage(image);
+                    news.setUrl(url);
+                    news.setCategory(category+" l");
+                    news.setWriter(writer);
+                    news.setDate(date);
                     newsList.add(news);
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

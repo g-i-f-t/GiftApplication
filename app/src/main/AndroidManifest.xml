@@ -16,7 +16,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".selectbank.SelectBankActivity"></activity>
+        <activity android:name=".WebViewActivity"></activity>
+        <activity android:name=".selectbank.SelectBankActivity" />
         <activity android:name=".gamedetail.PurchaseActivity" />
         <activity android:name=".signup.Login_API2" />
         <activity android:name=".signup.Login_API" />

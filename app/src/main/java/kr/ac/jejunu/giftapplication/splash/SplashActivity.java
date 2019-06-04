@@ -44,7 +44,6 @@ public class SplashActivity extends AppCompatActivity {
 //        anim = AnimationUtils.loadAnimation(this, R.anim.loading);
 //                imgAndroid.setAnimation(anim);
 //    }
-
     private void makeAlert() {
         alert = new AlertDialog.Builder(this);
         alert.setTitle("알림");
@@ -53,7 +52,6 @@ public class SplashActivity extends AppCompatActivity {
             dialog.dismiss();     //닫기
         });
     }
-
     private void LogSearch() {
         String LoginKey = profileManager.getLoginKey(this).get("userSeqNo");
             if (LoginKey != null) { // 한번이라도 접속한 적이 있을때. 자동로그인 시도
