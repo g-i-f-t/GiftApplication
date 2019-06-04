@@ -16,6 +16,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import kr.ac.jejunu.giftapplication.GiftApplication;
@@ -34,7 +36,6 @@ public class ProfileManager {
     public interface Callback {
         public void callback();
     }
-
     public void stopTask() {
         if(!netWorkTask.isCancelled()) netWorkTask.cancel(true);
     }
@@ -44,13 +45,13 @@ public class ProfileManager {
         netWorkTask = new NetworkTask(url, activity);
         LoginVO result;
         try {
-            result = netWorkTask.execute().get();
-            if (result.getCode() == 200) {
-                Profile profile = new Profile();
-                profile.setName(result.getName());
-                profile.setEmail(result.getEmail());
+                    result = netWorkTask.execute().get();
+                    if (result.getCode() == 200) {
+                        Profile profile = new Profile();
+                        profile.setName(result.getName());
+                        profile.setEmail(result.getEmail());
 
-                ((GiftApplication) activity.getApplication()).setUserInfo(profile);
+                        ((GiftApplication) activity.getApplication()).setUserInfo(profile);
                 callback.callback();
             }
         } catch (Exception e) {
@@ -66,19 +67,19 @@ public class ProfileManager {
         }
     }
     //RoomDB에 저장된 시퀀스넘버 반환
-    public String getLoginKey(Context context) {
+    public Map<String, String> getLoginKey(Context context) {
+        Map<String, String> sendData = null;
         User user = new User();
         UserDao roomUserDao = AppDatabase.getInstance(context).roomUserDao();
         // Room에서 get, user정보가 있을경우 서버로 로그인 요청
-        String LoginKey = null;
         try {
-            LoginKey = new RoomLog.getDBTask(roomUserDao).execute(user).get();
+          sendData = new RoomLog.getDBTask(roomUserDao).execute(user).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return LoginKey;
+        return sendData;
     }
 
     class NetWorkTask extends AsyncTask<Void, Void, LoginVO> {
@@ -100,7 +101,6 @@ public class ProfileManager {
 //                connection.setRequestProperty("Content-Type", "application/json");
 //                connection.setRequestProperty("charset", "UTF-8");
 //                connection.setUseCaches(false);
-
                 InputStream is = connection.getInputStream();
 
                 StringBuilder builder = new StringBuilder();

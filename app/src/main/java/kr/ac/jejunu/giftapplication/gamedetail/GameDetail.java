@@ -100,7 +100,7 @@ public class GameDetail extends AppCompatActivity {
 
         double progress = (((double) gameVO.getCurrentPrice()/ (double) gameVO.getGoalPrice()) * 100);
         gameTitle.setText(gameVO.getName());
-        gameDeveloper.setText(gameVO.getDeveloper());
+        gameDeveloper.setText(gameVO.getDeveloper().getName());
 //        gameTitle.setText((String) params.get("name"));
 //        gameDeveloper.setText((String) params.get("developer"));
         gameIntroduction.setText(gameVO.getGameInformation());

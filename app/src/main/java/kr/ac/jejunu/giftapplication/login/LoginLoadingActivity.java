@@ -65,7 +65,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
                 //why ADD? 앱이 삭제됐을 경우를 가정, Room에는 data가 존재하지 않기 때문!
                 addDB(resultCode); //room
                 ProfileManager profileManager = ((GiftApplication) getApplication()).getProfileManager();
-                String loginKey = profileManager.getLoginKey(this);
+                String loginKey = profileManager.getLoginKey(this).get("userSeqNo");
+
                 profileManager.getProfile(loginKey, this, () -> {
                     Intent intent = new Intent(LoginLoadingActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

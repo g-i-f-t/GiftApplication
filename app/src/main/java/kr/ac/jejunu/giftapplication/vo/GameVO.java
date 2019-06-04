@@ -6,7 +6,7 @@ import java.util.List;
 public class GameVO implements Serializable {
     private Long gameId;
     private String name;
-    private String developer;
+    private DeveloperVO developer;
     private String category;
     private boolean success;
     private Long currentPrice;
@@ -34,11 +34,11 @@ public class GameVO implements Serializable {
         this.name = name;
     }
 
-    public String getDeveloper() {
+    public DeveloperVO getDeveloper() {
         return developer;
     }
 
-    public void setDeveloper(String developer) {
+    public void setDeveloper(DeveloperVO developer) {
         this.developer = developer;
     }
 

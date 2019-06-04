@@ -1,10 +1,28 @@
 package kr.ac.jejunu.giftapplication.vo;
 
-public class News {
+public class NewsVO {
     private String image;
     private String title;
     private String info;
     private String summary;
+    private String release;
+    private String developer;
+
+    public String getRelease() {
+        return release;
+    }
+
+    public void setRelease(String release) {
+        this.release = release;
+    }
+
+    public String getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(String developer) {
+        this.developer = developer;
+    }
 
     public String getTitle() {
         return title;

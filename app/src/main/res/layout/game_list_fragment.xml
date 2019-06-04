@@ -24,8 +24,6 @@
         <EditText
             android:id="@+id/search"
             style="@style/EditTextTheme"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -33,7 +31,9 @@
             android:hint="탭하여 검색하기"
             android:inputType="text"
             android:selectAllOnFocus="true"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="8dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.tabs.TabLayout
