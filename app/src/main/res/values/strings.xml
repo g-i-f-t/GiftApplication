@@ -48,4 +48,6 @@
     <string name="purchase_activity_title">구매 금액</string>
     <string name="investment_button_title">지금 당장 투자하세요</string>
     <string name="testId">id</string>
+    <string name="select_account">계좌 선택</string>
+    <string name="select_your_account">송금에 사용하실 계좌를 선택해 주세요</string>
 </resources>

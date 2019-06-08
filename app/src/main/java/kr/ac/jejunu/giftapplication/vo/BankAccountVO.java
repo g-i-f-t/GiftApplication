@@ -9,7 +9,10 @@ public class BankAccountVO implements Serializable {
     private String account_alias;
     private String bank_name;
     private String account_holder_name;
+    private String account_num_masked;
 
+    public String getAccountNum() { return account_num_masked; }
+    public void setAccountNum(String account_num_masked) { this.account_num_masked = account_num_masked; }
     public String getFintechUseNum() {
         return fintech_use_num;
     }

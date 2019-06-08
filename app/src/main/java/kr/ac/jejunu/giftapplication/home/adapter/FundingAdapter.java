@@ -59,10 +59,10 @@ public class FundingAdapter extends RecyclerView.Adapter {
         double percentage = (fundingList.get(position).getGoalPrice() != 0.0f ? ((double) fundingList.get(position).getCurrentPrice() / (double) fundingList.get(position).getGoalPrice()) * 100 : 0.0f);
         fundingViewHolder.itemProgress.setProgress((int) percentage);
         fundingViewHolder.getInvestmentPercentage().setText(String.format(Locale.KOREAN, "%.0f%%", percentage));
-        if(position == 0)
-            fundingViewHolder.getFundingLayout().setMinHeight((int) context.getResources().getDimension(R.dimen.funding_view_height_1st_child));
-        else
-            fundingViewHolder.getFundingLayout().setMinHeight((int) context.getResources().getDimension(R.dimen.funding_view_height));
+//        if(position == 0)
+//            fundingViewHolder.getFundingLayout().setMinHeight((int) context.getResources().getDimension(R.dimen.funding_view_height_1st_child));
+//        else
+//            fundingViewHolder.getFundingLayout().setMinHeight((int) context.getResources().getDimension(R.dimen.funding_view_height));
 
         fundingViewHolder.getFundingLayout().setOnClickListener(v ->
                 callBackHomeIntent.callback(fundingViewHolder.getGameImage(), fundingList.get(position)));

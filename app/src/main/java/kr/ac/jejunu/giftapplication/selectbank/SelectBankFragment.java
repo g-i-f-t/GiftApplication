@@ -10,9 +10,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import kr.ac.jejunu.giftapplication.GiftApplication;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.selectbank.adapter.BankRecyclerAdapter;
 import kr.ac.jejunu.giftapplication.splash.ProfileManager;
 import kr.ac.jejunu.giftapplication.vo.BankAccountVO;
 
@@ -21,6 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -32,6 +36,7 @@ public class SelectBankFragment extends Fragment {
     private Toolbar toolbar;
     private ActionBar actionBar;
     private RecyclerView bankRecyclerView;
+    private BankRecyclerAdapter bankRecyclerAdapter;
 
     public static SelectBankFragment newInstance() {
         return new SelectBankFragment();
@@ -43,6 +48,7 @@ public class SelectBankFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.select_bank_fragment, container, false);
         toolbar = view.findViewById(R.id.select_bank_toolbar);
+        bankRecyclerView = view.findViewById(R.id.account_recycler_view);
         return view;
     }
 
@@ -52,9 +58,18 @@ public class SelectBankFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(SelectBankViewModel.class);
         setToolbar();
         // TODO: Use the ViewModel
+        setRecyclerView();
+
+    }
+
+    private void setRecyclerView() {
         ProfileManager profileManager = ((GiftApplication) getActivity().getApplication()).getProfileManager();
         bankAccountVOList = mViewModel.getBankAccountList(profileManager, getContext());
-
+        bankRecyclerAdapter = new BankRecyclerAdapter(bankAccountVOList, (item, index) -> {
+            Snackbar.make(getActivity().getWindow().getDecorView().getRootView(), "ㅎㅇ", Snackbar.LENGTH_SHORT).show();
+        });
+        bankRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        bankRecyclerView.setAdapter(bankRecyclerAdapter);
     }
 
     private void setToolbar() {
