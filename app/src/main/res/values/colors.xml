@@ -6,4 +6,8 @@
     <color name="colorAccent">#D81B60</color>
     <color name="toolbarBorder">#e7e7e7</color>
     <color name="editTextStroke">#e7e7e7</color>
+    <color name="kbBank">#FFC506</color>
+    <color name="kakaoBank">#FFD706</color>
+    <color name="ibkBank">#316BC8</color>
+    <color name="nhBank">#005baa</color>
 </resources>

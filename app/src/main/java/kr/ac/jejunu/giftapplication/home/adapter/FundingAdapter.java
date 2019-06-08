@@ -6,6 +6,7 @@
 
 package kr.ac.jejunu.giftapplication.home.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -32,10 +33,12 @@ import kr.ac.jejunu.giftapplication.vo.GameVO;
 
 public class FundingAdapter extends RecyclerView.Adapter {
     private final ArrayList<GameVO> fundingList;
+    private Context context;
     private FundingAdapter.CallBack callBackHomeIntent;
 
-    public FundingAdapter(List<GameVO> fundingList, FundingAdapter.CallBack callbackHomeIntent) {
+    public FundingAdapter(List<GameVO> fundingList, Context context, FundingAdapter.CallBack callbackHomeIntent) {
         this.fundingList = (ArrayList<GameVO>) fundingList;
+        this.context = context;
         this.callBackHomeIntent = callbackHomeIntent;
     }
 
@@ -57,9 +60,9 @@ public class FundingAdapter extends RecyclerView.Adapter {
         fundingViewHolder.itemProgress.setProgress((int) percentage);
         fundingViewHolder.getInvestmentPercentage().setText(String.format(Locale.KOREAN, "%.0f%%", percentage));
         if(position == 0)
-            fundingViewHolder.getFundingLayout().setMinHeight(360);
+            fundingViewHolder.getFundingLayout().setMinHeight((int) context.getResources().getDimension(R.dimen.funding_view_height_1st_child));
         else
-            fundingViewHolder.getFundingLayout().setMinHeight(840);
+            fundingViewHolder.getFundingLayout().setMinHeight((int) context.getResources().getDimension(R.dimen.funding_view_height));
 
         fundingViewHolder.getFundingLayout().setOnClickListener(v ->
                 callBackHomeIntent.callback(fundingViewHolder.getGameImage(), fundingList.get(position)));
