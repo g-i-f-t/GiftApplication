@@ -1,5 +1,6 @@
 package kr.ac.jejunu.giftapplication.selectbank.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -17,12 +19,14 @@ import kr.ac.jejunu.giftapplication.vo.BankAccountVO;
 public class BankRecyclerAdapter extends RecyclerView.Adapter<BankRecyclerAdapter.BankHolder>{
 
     private List<BankAccountVO> bankAccountList;
+    private Context context;
     private Callback callback;
     public interface Callback {
         public void run(BankAccountVO item, int index);
     }
-    public BankRecyclerAdapter(List<BankAccountVO> bankAccountList, Callback callback) {
+    public BankRecyclerAdapter(List<BankAccountVO> bankAccountList, Context context, Callback callback) {
         this.bankAccountList = bankAccountList;
+        this.context = context;
         this.callback = callback;
     }
 
@@ -35,7 +39,7 @@ public class BankRecyclerAdapter extends RecyclerView.Adapter<BankRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BankHolder holder, int position) {
-        holder.getBankAccountLayout().setBackgroundColor(bankAccountList.get(position).getBankColor());
+        holder.getBankAccountLayout().setBackgroundColor(ContextCompat.getColor(context, bankAccountList.get(position).getBankColor()));
         holder.getBankName().setText(bankAccountList.get(position).getBankName());
         holder.getAccountHolderName().setText(bankAccountList.get(position).getAccountHolderName());
         holder.getAccountNum().setText(bankAccountList.get(position).getAccountNum());

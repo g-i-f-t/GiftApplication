@@ -65,7 +65,7 @@ public class SelectBankFragment extends Fragment {
     private void setRecyclerView() {
         ProfileManager profileManager = ((GiftApplication) getActivity().getApplication()).getProfileManager();
         bankAccountVOList = mViewModel.getBankAccountList(profileManager, getContext());
-        bankRecyclerAdapter = new BankRecyclerAdapter(bankAccountVOList, (item, index) -> {
+        bankRecyclerAdapter = new BankRecyclerAdapter(bankAccountVOList, getContext(), (item, index) -> {
             Snackbar.make(getActivity().getWindow().getDecorView().getRootView(), "ㅎㅇ", Snackbar.LENGTH_SHORT).show();
         });
         bankRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

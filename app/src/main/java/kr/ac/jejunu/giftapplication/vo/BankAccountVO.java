@@ -51,7 +51,7 @@ public class BankAccountVO implements Serializable {
             case "카카오은행": return R.color.kakaoBank;
             case "농협": return R.color.nhBank;
             case "기업": return R.color.ibkBank;
-            default: return R.color.colorPrimary;
+            default: return R.color.defaultBank;
         }
     }
 }
