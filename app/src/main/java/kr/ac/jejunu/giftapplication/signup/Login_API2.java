@@ -48,7 +48,6 @@ public class Login_API2 extends AppCompatActivity {
         final HashMap<String, String> extra = (HashMap<String, String>) prevIntent.getSerializableExtra("data");
 
         //        //URL 설정
-
         String url = "http://117.17.102.139:8080/addAccount";
         JsonObject params = new JsonObject();
         params.addProperty("password", extra.get("password"));
