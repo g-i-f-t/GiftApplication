@@ -4,6 +4,34 @@ public class CafeVO {
     private String title;
     private String date;
     private String total_view;
+    private String developer;
+
+    public String getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(String developer) {
+        this.developer = developer;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    private String url;
+    private String image;
 
     public String getTitle() {
         return title;

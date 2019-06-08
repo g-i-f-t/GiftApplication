@@ -6,5 +6,9 @@
         <domain includeSubdomains="true">static.inven.co.kr</domain>
         <domain includeSubdomains="true">aerain.github.io</domain>
         <domain includeSubdomains="true">117.17.102.139</domain>
+        <domain includeSubdomains="true">cafe.naver.com</domain>
+        <domain includeSubdomains="true">m.cafe.naver.com</domain>
+        <domain includeSubdomains="true">mcafethumb-phinf.pstatic.net</domain>
+        <domain includeSubdomains="true">phinf.pstatic.net</domain>
     </domain-config>
 </network-security-config>
