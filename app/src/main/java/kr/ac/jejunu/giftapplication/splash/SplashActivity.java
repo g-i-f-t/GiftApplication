@@ -26,30 +26,31 @@ public class SplashActivity extends AppCompatActivity {
     private ProfileManager profileManager;
     private AlertDialog.Builder alert;
     private Timer limitLoadingTimer;
-//    private ImageView imgAndroid;
-//    private Animation anim;
+    private ImageView imgAndroid;
+    private Animation anim;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         profileManager = new ProfileManager();
         limitLoadingTimer = new Timer();
-//        initView();
+        initView();
         makeAlert();
         LogSearch();
     }
 
-//    private void initView() {
-//        imgAndroid =  findViewById(R.id.loadingView);
-//        anim = AnimationUtils.loadAnimation(this, R.anim.loading);
-//                imgAndroid.setAnimation(anim);
-//    }
+    private void initView() {
+        imgAndroid =  findViewById(R.id.loadingView);
+        anim = AnimationUtils.loadAnimation(this, R.anim.loading);
+                imgAndroid.setAnimation(anim);
+    }
     private void makeAlert() {
         alert = new AlertDialog.Builder(this);
         alert.setTitle("알림");
         alert.setMessage("GIFT서버와 연결이 되지 않습니다!");
         alert.setPositiveButton("확인", (dialog, which) -> {
             dialog.dismiss();     //닫기
+            finish();
         });
     }
     private void LogSearch() {

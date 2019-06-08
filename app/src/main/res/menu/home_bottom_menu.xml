@@ -8,4 +8,9 @@
         android:id="@+id/home_tab_gamelist"
         android:icon="@drawable/ic_baseline_gamepad"
         android:title="@string/home_tab_gamelist"/>
+
+    <item
+        android:id="@+id/home_tab_indegame"
+        android:icon="@drawable/ic_baseline_indegame"
+        android:title="@string/home_tab_indegame" />
 </menu>

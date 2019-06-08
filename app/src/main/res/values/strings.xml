@@ -48,4 +48,5 @@
     <string name="purchase_activity_title">구매 금액</string>
     <string name="investment_button_title">지금 당장 투자하세요</string>
     <string name="testId">id</string>
+    <string name="home_tab_indegame">개발게임</string>
 </resources>

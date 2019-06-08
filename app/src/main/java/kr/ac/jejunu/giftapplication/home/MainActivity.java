@@ -36,6 +36,7 @@ import kr.ac.jejunu.giftapplication.home.adapter.FundingViewPagerAdapter;
 import kr.ac.jejunu.giftapplication.home.fragment.AvailableFundingFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.CompleteFundingFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.FundingListFragment;
+import kr.ac.jejunu.giftapplication.home.fragment.IndeGameFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.NewsFeedFragment;
 import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
 
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity
                 case R.id.home_tab_gamelist:
                     openFragment(FundingListFragment.newInstance());
                     break;
+                case R.id.home_tab_indegame:
+                    openFragment(IndeGameFragment.newInstance());
                 default:
                     break;
             }
