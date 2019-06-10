@@ -7,44 +7,34 @@
     android:padding="0dp"
     tools:context=".home.fragment.IndeGameFragment">
 
-    <TextView
-        android:id="@+id/textView4"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/indegame_tab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        android:text="출시게임들 이에요오오옹~"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="모바일" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PC" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <kr.ac.jejunu.giftapplication.DisableSwipeViewPager
+        android:id="@+id/indegame_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageButton
-        android:id="@+id/on_top_button"
-        android:layout_width="48dp"
-        android:layout_height="57dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/circle"
-        android:scaleType="centerInside"
-        android:src="@drawable/top_button"
-        android:tint="#272323"
-        android:translationZ="1dp"
-        app:layout_constraintBottom_toBottomOf="@+id/indegame_recycler_view"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/indegame_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="28dp"
-        android:padding="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/indegame_tab" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

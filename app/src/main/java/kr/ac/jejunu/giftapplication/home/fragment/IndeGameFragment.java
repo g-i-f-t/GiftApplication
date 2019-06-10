@@ -1,40 +1,30 @@
 package kr.ac.jejunu.giftapplication.home.fragment;
 
-import androidx.lifecycle.ViewModelProviders;
-
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TableLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.Button;
-import android.widget.ImageButton;
+import com.google.android.material.tabs.TabLayout;
 
-import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import kr.ac.jejunu.giftapplication.DisableSwipeViewPager;
 import kr.ac.jejunu.giftapplication.R;
-import kr.ac.jejunu.giftapplication.WebViewActivity;
-import kr.ac.jejunu.giftapplication.home.adapter.IndeGameAdapter;
-import kr.ac.jejunu.giftapplication.home.adapter.NewsFeedAdapter;
+import kr.ac.jejunu.giftapplication.home.adapter.FundingViewPagerAdapter;
 import kr.ac.jejunu.giftapplication.home.viewmodel.IndeGameViewModel;
-import kr.ac.jejunu.giftapplication.vo.CafeVO;
 
 public class IndeGameFragment extends Fragment {
-    private List<CafeVO> result;
+
+
+    private ViewPager indegameViewPager;
+    private TabLayout indeGameTableLayout;
     private IndeGameViewModel mViewModel;
-    private RecyclerView recyclerView;
-    private IndeGameAdapter recyclerAdapter;
-    private WebView webView;
-    private ImageButton imageButton;
-    private int page;
 
     public static IndeGameFragment newInstance() {
         return new IndeGameFragment();
@@ -42,16 +32,31 @@ public class IndeGameFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        result = null;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.inde_game_fragment, container, false);
-        recyclerView = view.findViewById(R.id.indegame_recycler_view);
-        imageButton = view.findViewById(R.id.on_top_button);
+        //탭 생성
+        indeGameTableLayout = view.findViewById(R.id.indegame_tab);
+        indegameViewPager = (DisableSwipeViewPager) view.findViewById(R.id.indegame_pager);
+
         return view;
+    }
+
+    private void setTabLayout() {
+        FundingViewPagerAdapter adapter = setFundingViewPagerAdapter();
+        indegameViewPager.setAdapter(adapter);
+        indegameViewPager.setPageMargin((int) getResources().getDimension(R.dimen.view_pager_gap));
+        indegameViewPager.setOffscreenPageLimit(2);
+        indeGameTableLayout.setupWithViewPager(indegameViewPager);
+    }
+    private FundingViewPagerAdapter setFundingViewPagerAdapter() {
+        FundingViewPagerAdapter adapter = new FundingViewPagerAdapter(getChildFragmentManager());
+        adapter.addPage(MobileIndeFragment.newInstance(8), getResources().getString(R.string.availableFunding));
+        adapter.addPage(MobileIndeFragment.newInstance(89), getResources().getString(R.string.completeFunding));
+        return adapter;
     }
 
     @Override
@@ -60,31 +65,7 @@ public class IndeGameFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(IndeGameViewModel.class);
         // TODO: Use the ViewModel
 
-        //List에 data가 없을 시 get해오도록
-        if(result == null) result = mViewModel.getCafe(++page);
-        recyclerAdapter = new IndeGameAdapter(result, url -> {
-            Intent intent = new Intent(getContext(), WebViewActivity.class);
-            intent.putExtra("url" , url);
-            startActivity(intent);
-        });
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                //view의 최하단 판별 후 data 더보기 '1' == 최하단
-                if (!recyclerView.canScrollVertically(1)) {
-                    List<CafeVO> moreList = mViewModel.getCafe(++page);
-                    if(!moreList.isEmpty()) {
-                        result.addAll(moreList);
-                        recyclerAdapter.notifyDataSetChanged();
-                    } else {
-                        recyclerView.removeOnScrollListener(this);
-                    }
-                }
-            }
-        });
-        recyclerView.setAdapter(recyclerAdapter);
-        imageButton.setOnClickListener(v -> recyclerView.smoothScrollToPosition(0));
+        setTabLayout();
     }
 
 }

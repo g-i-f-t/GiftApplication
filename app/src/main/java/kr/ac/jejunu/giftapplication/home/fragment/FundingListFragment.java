@@ -72,7 +72,6 @@ public class FundingListFragment extends Fragment {
         fundingViewPager.setPageMargin((int) getResources().getDimension(R.dimen.view_pager_gap));
         fundingViewPager.setOffscreenPageLimit(2);
         fundingTableLayout.setupWithViewPager(fundingViewPager);
-
     }
 
     private FundingViewPagerAdapter setFundingViewPagerAdapter() {
