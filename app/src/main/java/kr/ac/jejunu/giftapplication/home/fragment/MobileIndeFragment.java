@@ -32,6 +32,7 @@ public class MobileIndeFragment extends Fragment {
     private IndeGameAdapter recyclerAdapter;
     private WebView webView;
     private ImageButton imageButton;
+    private ImageButton hotsortButton;
     private MobileIndeViewModel mViewModel;
     private int menuId;
     private int page;
@@ -50,6 +51,7 @@ public class MobileIndeFragment extends Fragment {
         View view = inflater.inflate(R.layout.mobile_inde_fragment, container, false);
         recyclerView = view.findViewById(R.id.indegame_recycler_view);
         imageButton = view.findViewById(R.id.on_top_button);
+//        hotsortButton = view.findViewById(R.id.most_view_sort_button);
         return view;
     }
 

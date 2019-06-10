@@ -74,7 +74,6 @@ public class MobileIndeViewModel extends ViewModel {
                     cafeVO.setDate(date);
                     cafeList.add(cafeVO);
 
-//                    Collections.sort(total_view.split(Total:));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
