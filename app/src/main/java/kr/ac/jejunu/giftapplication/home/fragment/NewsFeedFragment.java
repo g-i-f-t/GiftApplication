@@ -1,5 +1,10 @@
 package kr.ac.jejunu.giftapplication.home.fragment;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -54,11 +59,22 @@ public class NewsFeedFragment extends Fragment {
         imageButton = view.findViewById(R.id.on_top_button);
         return view;
     }
-
+    private void setDrawerSettings() {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setTitle(getResources().getString(R.string.home_tab_newsfeed));
+        DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewsfeedViewModel.class);
+        setDrawerSettings();
         if(result == null) result = mViewModel.getNews(++page);
         recyclerAdapter = new NewsFeedAdapter(result, url -> {
             Intent intent = new Intent(getContext(), WebViewActivity.class);
