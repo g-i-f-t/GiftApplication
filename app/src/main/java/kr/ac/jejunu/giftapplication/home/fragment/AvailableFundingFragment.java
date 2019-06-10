@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,28 +59,19 @@ public class AvailableFundingFragment extends Fragment {
     private void setRecyclerView() {
 //        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        fundingRecyclerView.setLayoutManager(layoutManager);
+        fundingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        RecyclerView.Adapter fundingAdapter = new FundingAdapter(mViewModel.getFundingList(), getContext(), this::transition);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(mViewModel.getAllCategory(), getContext());
+        CategoryAdapter categoryAdapter = new CategoryAdapter(mViewModel.getAllCategory(), getActivity(), this::transition);
         fundingRecyclerView.setAdapter(categoryAdapter);
 
     }
 
     private void transition(ImageView view, GameVO game) {
         Intent intent = new Intent(getContext(), GameDetail.class);
-
-//        HashMap<String, Object> params = new HashMap<>();
-//        params.put("id", game.getGameId());
-//        params.put("name", game.getName());
-//        params.put("developer", game.getDeveloper());
         intent.putExtra("gameVO", game);
         String fileName = "homeGameImage.png";
         FileIO.saveImage(view, fileName, getContext());
-
-//        intent.putExtra("params", params);
         intent.putExtra("fileName", fileName);
-//        intent.putExtra("game", game);
 
         ActivityOptions options = ActivityOptions
                 .makeSceneTransitionAnimation(getActivity(), view, getResources().getString(R.string.funding_game_image));

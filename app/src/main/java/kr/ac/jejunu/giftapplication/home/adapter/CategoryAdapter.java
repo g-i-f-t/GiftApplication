@@ -22,10 +22,12 @@ import kr.ac.jejunu.giftapplication.vo.GameVO;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Category>{
     private final List<String> categoryList;
     private final Context context;
+    private CategoryItemAdapter.Callback callback;
 
-    public CategoryAdapter(List<String> allCategory, Context context) {
+    public CategoryAdapter(List<String> allCategory, Context context, CategoryItemAdapter.Callback callback) {
         this.categoryList = allCategory;
         this.context = context;
+        this.callback = callback;
     }
 
     @NonNull
@@ -38,25 +40,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull Category holder, int position) {
         holder.getCategoryTitle().setText(categoryList.get(position));
-        setRecyclerView(holder.categoryRecyclerView, categoryList.get(position));
+        holder.getCategoryRecyclerView()
+                .setAdapter(new CategoryItemAdapter(getGameList(categoryList.get(position)), callback));
     }
 
-    private void setRecyclerView(RecyclerView categoryRecyclerView, String category) {
+    private List<GameVO> getGameList(String category) {
         String uri = "http://117.17.102.139:8080/game/category/" + category;
-        List<GameVO> gameVOList = null;
+        List<GameVO> gameVOList = new ArrayList<>();
         try {
             gameVOList = new GetFundingTask(uri).execute().get();
         } catch (ExecutionException e) {
             e.printStackTrace();
-            gameVOList = new ArrayList<>();
         } catch (InterruptedException e) {
             e.printStackTrace();
-            gameVOList = new ArrayList<>();
-        } finally {
-            CategoryItemAdapter categoryItemAdapter = new CategoryItemAdapter(gameVOList);
-            categoryRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            categoryRecyclerView.setAdapter(categoryItemAdapter);
         }
+        return gameVOList;
     }
 
     @Override
@@ -71,22 +69,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             super(itemView);
             categoryTitle = itemView.findViewById(R.id.category_title);
             categoryRecyclerView = itemView.findViewById(R.id.category_recycler_view);
+            categoryRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         }
 
         public TextView getCategoryTitle() {
             return categoryTitle;
         }
 
-        public void setCategoryTitle(TextView categoryTitle) {
-            this.categoryTitle = categoryTitle;
-        }
-
         public RecyclerView getCategoryRecyclerView() {
             return categoryRecyclerView;
-        }
-
-        public void setCategoryRecyclerView(RecyclerView categoryRecyclerView) {
-            this.categoryRecyclerView = categoryRecyclerView;
         }
     }
 }

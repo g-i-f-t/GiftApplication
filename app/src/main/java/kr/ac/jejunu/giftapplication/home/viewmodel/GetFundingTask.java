@@ -46,6 +46,7 @@ public class GetFundingTask extends AsyncTask<Void, Void, List<GameVO>> {
                 builder.append(line);
                 builder.append('\n');
             }
+            System.out.println(builder.toString());
             Gson gson = new Gson();
             Type type = new TypeToken<List<GameVO>>() {
             }.getType();
