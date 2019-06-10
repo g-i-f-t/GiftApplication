@@ -1,5 +1,6 @@
 package kr.ac.jejunu.giftapplication.home.viewmodel;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import org.jsoup.Connection;
@@ -17,10 +18,9 @@ import androidx.lifecycle.ViewModel;
 import kr.ac.jejunu.giftapplication.vo.CafeVO;
 
 public class IndeGameViewModel extends ViewModel {
-    public List<CafeVO> getCafe() {
-
-        String url = "https://m.cafe.naver.com/ArticleList.nhn?search.clubid=28183931&search.menuid=8&search.boardtype=L";
-//        String url = "http://www.inven.co.kr";
+    public List<CafeVO> getCafe(int page) {
+        String url = "https://m.cafe.naver.com/ArticleList.nhn?search.clubid=28183931&search.menuid=8&search.boardtype=L&search.page="+page;
+//      String url = "http://www.inven.co.kr";
         CafeTask task = new CafeTask(url);
         List<CafeVO> indegameList   = new ArrayList<>();
         try {
@@ -63,7 +63,7 @@ public class IndeGameViewModel extends ViewModel {
                     String date = element.select("span[class = time]").text();
 
                     CafeVO cafeVO = new CafeVO();
-
+                    System.out.println("url"+url);
                     cafeVO.setTitle(title);
                     cafeVO.setImage(image);
                     cafeVO.setUrl(url);

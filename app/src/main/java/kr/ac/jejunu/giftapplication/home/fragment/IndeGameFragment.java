@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class IndeGameFragment extends Fragment {
     private RecyclerView recyclerView;
     private IndeGameAdapter recyclerAdapter;
     private WebView webView;
+    private Button button;
+    private int page;
 
     public static IndeGameFragment newInstance() {
         return new IndeGameFragment();
@@ -46,6 +49,7 @@ public class IndeGameFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.inde_game_fragment, container, false);
         recyclerView = view.findViewById(R.id.indegame_recycler_view);
+        button = view.findViewById(R.id.on_top_button);
         return view;
     }
 
@@ -54,14 +58,32 @@ public class IndeGameFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(IndeGameViewModel.class);
         // TODO: Use the ViewModel
-        if(result == null) result = mViewModel.getCafe();
+
+        //List에 data가 없을 시 get해오도록
+        if(result == null) result = mViewModel.getCafe(++page);
         recyclerAdapter = new IndeGameAdapter(result, url -> {
             Intent intent = new Intent(getContext(), WebViewActivity.class);
             intent.putExtra("url" , url);
             startActivity(intent);
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                //view의 최하단 판별 후 data 더보기 '1' == 최하단
+                if (!recyclerView.canScrollVertically(1)) {
+                    List<CafeVO> moreList = mViewModel.getCafe(++page);
+                    if(!moreList.isEmpty()) {
+                        result.addAll(moreList);
+                        recyclerAdapter.notifyDataSetChanged();
+                    } else {
+                        recyclerView.removeOnScrollListener(this);
+                    }
+                }
+            }
+        });
         recyclerView.setAdapter(recyclerAdapter);
+        button.setOnClickListener(v -> recyclerView.smoothScrollToPosition(0));
     }
 
 }
