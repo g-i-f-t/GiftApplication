@@ -5,9 +5,13 @@
     android:id="@+id/news_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
     android:background="@drawable/toolbar_shape"
     android:elevation="2dp"
+    android:visibility="visible"
     app:layout_constraintCircleAngle="0">
 
     <ImageView
@@ -29,13 +33,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="7dp"
         android:autoLink="web"
+        android:lineSpacingExtra="10sp"
         android:paddingRight="8dp"
         android:text="게임제목"
         android:textColor="@android:color/black"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView_url"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imageView_img"
@@ -73,5 +76,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView_img"
         app:layout_constraintTop_toBottomOf="@+id/textView_writer" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+

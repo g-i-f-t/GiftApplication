@@ -3,6 +3,7 @@ package kr.ac.jejunu.giftapplication.selectbank;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -75,7 +76,7 @@ public class SelectBankFragment extends Fragment {
 
     private void withDrawWithFintechUseNum(String fintechUseNum, long id, long price) {
         ProfileManager profileManager = ((GiftApplication) getActivity().getApplication()).getProfileManager();
-        new WithDrawTask(fintechUseNum, id, price, profileManager.getLoginKey(getContext()).get("accessToken")).execute();
+        new WithDrawTask(fintechUseNum, id, price, profileManager.getLoginKey(getContext()).get("accessToken"), profileManager.getLoginKey(getContext()).get("userSeqNo")).execute();
     }
 
     private void setToolbar() {

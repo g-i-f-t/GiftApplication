@@ -14,16 +14,18 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class WithDrawTask extends AsyncTask<Void, Void, Void> {
-    private final String fintechUseNum, url, access_token;
+    private final String fintechUseNum, url, access_token, userSeqNo;
     private final long id;
     private final long price;
 
-    public WithDrawTask(String fintechUseNum, long id, long price, String access_token) {
+    public WithDrawTask(String fintechUseNum, long id, long price, String accessToken, String userSeqNo) {
         this.url = "http://117.17.102.139:8080/bank/withdraw";
         this.fintechUseNum = fintechUseNum;
         this.id = id;
         this.price = price;
-        this.access_token = access_token;
+        this.access_token = accessToken;
+        this.userSeqNo = userSeqNo;
+
     }
 
     @Override
@@ -42,6 +44,7 @@ public class WithDrawTask extends AsyncTask<Void, Void, Void> {
             jsonObject.put("gameId", id);
             jsonObject.put("price", price);
             jsonObject.put("accessToken", access_token);
+            jsonObject.put("userSeqId", userSeqNo);
 
             OutputStream os = connection.getOutputStream();
             os.write(jsonObject.toString().getBytes(StandardCharsets.UTF_8));

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class GameVO implements Serializable {
-    private Long gameId;
+    private Long id;
     private String name;
     private DeveloperVO developer;
     private String category;
@@ -19,11 +19,11 @@ public class GameVO implements Serializable {
     private List<GameDescribeImagesVO> gameDescribeImages;
 
     public Long getGameId() {
-        return gameId;
+        return id;
     }
 
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
+    public void setGameId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
