@@ -76,5 +76,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView_img"
         app:layout_constraintTop_toBottomOf="@+id/textView_writer" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
