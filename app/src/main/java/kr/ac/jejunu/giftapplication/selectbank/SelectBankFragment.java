@@ -65,11 +65,17 @@ public class SelectBankFragment extends Fragment {
     private void setRecyclerView() {
         ProfileManager profileManager = ((GiftApplication) getActivity().getApplication()).getProfileManager();
         bankAccountVOList = mViewModel.getBankAccountList(profileManager, getContext());
-        bankRecyclerAdapter = new BankRecyclerAdapter(bankAccountVOList, getContext(), (item, index) -> {
+        bankRecyclerAdapter = new BankRecyclerAdapter(bankAccountVOList, getContext(), fintechUseNum -> {
             Snackbar.make(getActivity().getWindow().getDecorView().getRootView(), "ㅎㅇ", Snackbar.LENGTH_SHORT).show();
+            withDrawWithFintechUseNum(fintechUseNum, getActivity().getIntent().getLongExtra("id", 0), getActivity().getIntent().getLongExtra("price", 0));
         });
         bankRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         bankRecyclerView.setAdapter(bankRecyclerAdapter);
+    }
+
+    private void withDrawWithFintechUseNum(String fintechUseNum, long id, long price) {
+        ProfileManager profileManager = ((GiftApplication) getActivity().getApplication()).getProfileManager();
+        new WithDrawTask(fintechUseNum, id, price, profileManager.getLoginKey(getContext()).get("accessToken")).execute();
     }
 
     private void setToolbar() {

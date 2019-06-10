@@ -22,7 +22,7 @@ public class BankRecyclerAdapter extends RecyclerView.Adapter<BankRecyclerAdapte
     private Context context;
     private Callback callback;
     public interface Callback {
-        public void run(BankAccountVO item, int index);
+        public void run(String fintechUseNum);
     }
     public BankRecyclerAdapter(List<BankAccountVO> bankAccountList, Context context, Callback callback) {
         this.bankAccountList = bankAccountList;
@@ -44,7 +44,7 @@ public class BankRecyclerAdapter extends RecyclerView.Adapter<BankRecyclerAdapte
         holder.getAccountHolderName().setText(bankAccountList.get(position).getAccountHolderName());
         holder.getAccountNum().setText(bankAccountList.get(position).getAccountNum());
         holder.getAccountAlias().setText(bankAccountList.get(position).getAccountAlias());
-        holder.getBankAccountLayout().setOnClickListener(v -> callback.run(bankAccountList.get(position), position));
+        holder.getBankAccountLayout().setOnClickListener(v -> callback.run(bankAccountList.get(position).getFintechUseNum()));
     }
 
     @Override
