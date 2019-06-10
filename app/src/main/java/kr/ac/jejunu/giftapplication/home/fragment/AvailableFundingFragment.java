@@ -15,16 +15,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import kr.ac.jejunu.giftapplication.FileIO;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.gamedetail.GameDetail;
+import kr.ac.jejunu.giftapplication.home.adapter.CategoryAdapter;
 import kr.ac.jejunu.giftapplication.home.adapter.FundingAdapter;
 import kr.ac.jejunu.giftapplication.home.viewmodel.AvailableFundingViewModel;
 import kr.ac.jejunu.giftapplication.vo.GameVO;
@@ -53,10 +56,13 @@ public class AvailableFundingFragment extends Fragment {
     }
 
     private void setRecyclerView() {
-        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+//        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         fundingRecyclerView.setLayoutManager(layoutManager);
-        RecyclerView.Adapter fundingAdapter = new FundingAdapter(mViewModel.getFundingList(), getContext(), this::transition);
-        fundingRecyclerView.setAdapter(fundingAdapter);
+//        RecyclerView.Adapter fundingAdapter = new FundingAdapter(mViewModel.getFundingList(), getContext(), this::transition);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(mViewModel.getAllCategory(), getContext());
+        fundingRecyclerView.setAdapter(categoryAdapter);
 
     }
 

@@ -7,19 +7,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.viewpager.widget.ViewPager;
+
+import kr.ac.jejunu.giftapplication.DisableSwipeViewPager;
 import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.adapter.FundingViewPagerAdapter;
 import kr.ac.jejunu.giftapplication.home.viewmodel.GameListViewModel;
@@ -45,7 +50,7 @@ public class FundingListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.game_list_fragment, container, false);
         fundingTableLayout = view.findViewById(R.id.funding_tab);
-        fundingViewPager = view.findViewById(R.id.funding_pager);
+        fundingViewPager = (DisableSwipeViewPager) view.findViewById(R.id.funding_pager);
 
         return view;
     }
@@ -67,6 +72,7 @@ public class FundingListFragment extends Fragment {
         fundingViewPager.setPageMargin((int) getResources().getDimension(R.dimen.view_pager_gap));
         fundingViewPager.setOffscreenPageLimit(2);
         fundingTableLayout.setupWithViewPager(fundingViewPager);
+
     }
 
     private FundingViewPagerAdapter setFundingViewPagerAdapter() {
@@ -84,5 +90,4 @@ public class FundingListFragment extends Fragment {
         setTabLayout();
         setDrawerSettings();
     }
-
 }
