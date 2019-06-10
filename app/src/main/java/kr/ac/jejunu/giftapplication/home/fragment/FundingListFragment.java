@@ -51,7 +51,6 @@ public class FundingListFragment extends Fragment {
         view = inflater.inflate(R.layout.game_list_fragment, container, false);
         fundingTableLayout = view.findViewById(R.id.funding_tab);
         fundingViewPager = (DisableSwipeViewPager) view.findViewById(R.id.funding_pager);
-
         return view;
     }
 

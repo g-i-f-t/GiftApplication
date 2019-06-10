@@ -1,11 +1,13 @@
 package kr.ac.jejunu.giftapplication.selectbank;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import kr.ac.jejunu.giftapplication.GiftApplication;
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.home.MainActivity;
 import kr.ac.jejunu.giftapplication.selectbank.adapter.BankRecyclerAdapter;
 import kr.ac.jejunu.giftapplication.splash.ProfileManager;
 import kr.ac.jejunu.giftapplication.vo.BankAccountVO;
@@ -67,8 +70,17 @@ public class SelectBankFragment extends Fragment {
         ProfileManager profileManager = ((GiftApplication) getActivity().getApplication()).getProfileManager();
         bankAccountVOList = mViewModel.getBankAccountList(profileManager, getContext());
         bankRecyclerAdapter = new BankRecyclerAdapter(bankAccountVOList, getContext(), fintechUseNum -> {
-            Snackbar.make(getActivity().getWindow().getDecorView().getRootView(), "ㅎㅇ", Snackbar.LENGTH_SHORT).show();
             withDrawWithFintechUseNum(fintechUseNum, getActivity().getIntent().getLongExtra("id", 0), getActivity().getIntent().getLongExtra("price", 0));
+            AlertDialog dialog = new AlertDialog.Builder(getContext())
+                    .setTitle("완료")
+                    .setMessage("펀딩이 완료되었습니다.")
+                    .setPositiveButton("확인", (dialogInterface, i) -> {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        intent.putExtra("onPurchased", true);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }).create();
+            dialog.show();
         });
         bankRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         bankRecyclerView.setAdapter(bankRecyclerAdapter);

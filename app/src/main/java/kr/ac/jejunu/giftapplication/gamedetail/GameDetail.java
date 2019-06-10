@@ -6,6 +6,7 @@
 
 package kr.ac.jejunu.giftapplication.gamedetail;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,12 +60,35 @@ public class GameDetail extends AppCompatActivity {
 
         setButtonTransition();
         mButton.setOnClickListener(v -> {
+            Boolean hasHistory = hasHistory();
+            System.out.println(hasHistory);
+            if(hasHistory) {
+                AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setTitle("기록 존재")
+                        .setMessage("이미 해당 게임에 투자하셨습니다.")
+                        .create();
+
+                dialog.show();
+                return;
+            }
             Intent intent = new Intent(this, InvestmentAgreementActivity.class);
-            System.out.println("넘어가는 값은" + gameVO.getGameId());
             intent.putExtra("id", gameVO.getGameId());
             startActivity(intent);
         });
 
+    }
+
+    private boolean hasHistory() {
+        final String url = "http://117.17.102.139:8080/game/lookup/" + gameVO.getGameId();
+        Boolean hasHistory = false;
+        try {
+            hasHistory = new HistoryTask(url).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return hasHistory;
     }
 
     private void setButtonTransition() {

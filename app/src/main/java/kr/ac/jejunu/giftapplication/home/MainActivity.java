@@ -30,6 +30,7 @@ import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.home.fragment.FundingListFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.IndeGameFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.NewsFeedFragment;
+import kr.ac.jejunu.giftapplication.home.fragment.TimeLineFragment;
 import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -51,13 +52,13 @@ public class MainActivity extends AppCompatActivity
         if(getIntent().getBooleanExtra("onPurchased", false)) {
             openFragment(FundingListFragment.newInstance());
         } else {
-            openFragment(NewsFeedFragment.newInstance());
+            openFragment(TimeLineFragment.newInstance());
         }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.home_tab_timeline:
-
+                    openFragment(TimeLineFragment.newInstance());
                     break;
                 case R.id.home_tab_newsfeed:
                     openFragment(NewsFeedFragment.newInstance());
