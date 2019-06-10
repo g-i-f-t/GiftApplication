@@ -12,29 +12,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.snackbar.SnackbarContentLayout;
-import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
+
 import kr.ac.jejunu.giftapplication.GiftApplication;
 import kr.ac.jejunu.giftapplication.R;
-import kr.ac.jejunu.giftapplication.home.adapter.FundingViewPagerAdapter;
-import kr.ac.jejunu.giftapplication.home.fragment.AvailableFundingFragment;
-import kr.ac.jejunu.giftapplication.home.fragment.CompleteFundingFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.FundingListFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.IndeGameFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.NewsFeedFragment;
@@ -64,6 +56,9 @@ public class MainActivity extends AppCompatActivity
 
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
+                case R.id.home_tab_timeline:
+
+                    break;
                 case R.id.home_tab_newsfeed:
                     openFragment(NewsFeedFragment.newInstance());
                     break;
