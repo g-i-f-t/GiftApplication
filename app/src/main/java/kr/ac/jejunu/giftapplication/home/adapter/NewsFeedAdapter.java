@@ -63,7 +63,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.textView_title.setText(newsList.get(position).getTitle());
-        holder.textView_title.setMovementMethod(LinkMovementMethod.getInstance());
         holder.textView_category.setText(newsList.get(position).getCategory());
         holder.texView_writer.setText(newsList.get(position).getWriter());
         holder.textView_date.setText(newsList.get(position).getDate());
