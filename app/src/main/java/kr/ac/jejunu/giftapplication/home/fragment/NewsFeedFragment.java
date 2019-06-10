@@ -15,12 +15,14 @@ import kr.ac.jejunu.giftapplication.R;
 import kr.ac.jejunu.giftapplication.WebViewActivity;
 import kr.ac.jejunu.giftapplication.home.adapter.NewsFeedAdapter;
 import kr.ac.jejunu.giftapplication.home.viewmodel.NewsfeedViewModel;
+import kr.ac.jejunu.giftapplication.vo.CafeVO;
 import kr.ac.jejunu.giftapplication.vo.NewsVO;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -29,8 +31,10 @@ public class NewsFeedFragment extends Fragment {
     private NewsfeedViewModel mViewModel;
     private RecyclerView recyclerView;
     private NewsFeedAdapter recyclerAdapter;
+    private ImageButton imageButton;
     private List<NewsVO> result;
     private WebView webView;
+    private int page;
 
     public static NewsFeedFragment newInstance() {
         return new NewsFeedFragment();
@@ -47,6 +51,7 @@ public class NewsFeedFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.newsfeed_fragment, container, false);
         recyclerView = view.findViewById(R.id.news_feed_recycler_view);
+        imageButton = view.findViewById(R.id.on_top_button);
         return view;
     }
 
@@ -54,14 +59,30 @@ public class NewsFeedFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewsfeedViewModel.class);
-        if(result == null) result = mViewModel.getNews();
+        if(result == null) result = mViewModel.getNews(++page);
         recyclerAdapter = new NewsFeedAdapter(result, url -> {
             Intent intent = new Intent(getContext(), WebViewActivity.class);
             intent.putExtra("url" , url);
             startActivity(intent);
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                //view의 최하단 판별 후 data 더보기 '1' == 최하단
+                if (!recyclerView.canScrollVertically(1)) {
+                    List<NewsVO> moreList = mViewModel.getNews(++page);
+                    if(!moreList.isEmpty()) {
+                        result.addAll(moreList);
+                        recyclerAdapter.notifyDataSetChanged();
+                    } else {
+                        recyclerView.removeOnScrollListener(this);
+                    }
+                }
+            }
+        });
         recyclerView.setAdapter(recyclerAdapter);
+        imageButton.setOnClickListener(v -> recyclerView.smoothScrollToPosition(0));
 
     }
 

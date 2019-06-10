@@ -53,4 +53,8 @@
     <string name="home_tab_indegame">개발게임</string>
     <string name="home_tab_timeline">타임라인</string>
     <string name="category_selected_game">에 해당하는 게임입니다.</string>
+    <!-- Strings related to indegameList -->
+    <string name="mobile_tab">모바일</string>
+    <string name="pc_tab">PC</string>
+
 </resources>

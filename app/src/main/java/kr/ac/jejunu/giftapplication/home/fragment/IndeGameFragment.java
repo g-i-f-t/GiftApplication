@@ -54,8 +54,8 @@ public class IndeGameFragment extends Fragment {
     }
     private FundingViewPagerAdapter setFundingViewPagerAdapter() {
         FundingViewPagerAdapter adapter = new FundingViewPagerAdapter(getChildFragmentManager());
-        adapter.addPage(MobileIndeFragment.newInstance(8), getResources().getString(R.string.availableFunding));
-        adapter.addPage(MobileIndeFragment.newInstance(89), getResources().getString(R.string.completeFunding));
+        adapter.addPage(MobileIndeFragment.newInstance(8), getResources().getString(R.string.mobile_tab));
+        adapter.addPage(MobileIndeFragment.newInstance(89), getResources().getString(R.string.pc_tab));
         return adapter;
     }
 
@@ -64,7 +64,6 @@ public class IndeGameFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(IndeGameViewModel.class);
         // TODO: Use the ViewModel
-
         setTabLayout();
     }
 
