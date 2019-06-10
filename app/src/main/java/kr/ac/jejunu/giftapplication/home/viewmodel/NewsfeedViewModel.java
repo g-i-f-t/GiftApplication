@@ -19,8 +19,8 @@ import androidx.lifecycle.ViewModel;
 import kr.ac.jejunu.giftapplication.vo.NewsVO;
 
 public class NewsfeedViewModel extends ViewModel {
-    public List<NewsVO> getNews() {
-        String url = "http://www.inven.co.kr/webzine/news/?site=indie";
+    public List<NewsVO> getNews(int page) {
+        String url = "http://www.inven.co.kr/webzine/news/?site=indie&page=" + page;
         NewsFeedTask task = new NewsFeedTask(url);
         List<NewsVO> newsfeedList = new ArrayList<>();
         try {
