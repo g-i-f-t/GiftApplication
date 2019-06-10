@@ -1,7 +1,6 @@
 package kr.ac.jejunu.giftapplication.home.viewmodel;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

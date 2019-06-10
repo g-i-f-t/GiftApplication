@@ -57,10 +57,7 @@ public class AvailableFundingFragment extends Fragment {
     }
 
     private void setRecyclerView() {
-//        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-
         fundingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        RecyclerView.Adapter fundingAdapter = new FundingAdapter(mViewModel.getFundingList(), getContext(), this::transition);
         CategoryAdapter categoryAdapter = new CategoryAdapter(mViewModel.getAllCategory(), getActivity(), this::transition);
         fundingRecyclerView.setAdapter(categoryAdapter);
 

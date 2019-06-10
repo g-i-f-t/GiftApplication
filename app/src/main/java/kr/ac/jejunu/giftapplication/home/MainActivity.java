@@ -32,6 +32,7 @@ import kr.ac.jejunu.giftapplication.home.fragment.IndeGameFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.NewsFeedFragment;
 import kr.ac.jejunu.giftapplication.home.fragment.TimeLineFragment;
 import kr.ac.jejunu.giftapplication.introduction.IntroductionActivity;
+import kr.ac.jejunu.giftapplication.myinvestment.MyInvestMentActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -123,17 +124,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()) {
-            case R.id.drawer_investment_display:
-                break;
+//            case R.id.drawer_investment_display:
+//                break;
             case R.id.drawer_my_investment_list:
+                Intent intent = new Intent(this, MyInvestMentActivity.class);
+                startActivity(intent);
                 break;
             case R.id.drawer_announce:
                 break;
-            case R.id.drawer_use_guide:
-                Intent intent = new Intent(this, IntroductionActivity.class);
-                startActivity(intent);
-                finish();
-                break;
+//            case R.id.drawer_use_guide:
+//                Intent intent = new Intent(this, IntroductionActivity.class);
+//                startActivity(intent);
+//                finish();
+//                break;
 
             default:
                 break;

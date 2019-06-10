@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -59,6 +60,8 @@ public class GameDetail extends AppCompatActivity {
         setHeaderImage();
 
         setButtonTransition();
+        if(gameVO.isSuccess())
+            mButton.setVisibility(View.INVISIBLE);
         mButton.setOnClickListener(v -> {
             Boolean hasHistory = hasHistory();
             System.out.println(hasHistory);

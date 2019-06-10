@@ -1,4 +1,4 @@
-package kr.ac.jejunu.giftapplication.selectbank;
+package kr.ac.jejunu.giftapplication.myinvestment;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,16 +9,16 @@ import android.view.MenuItem;
 
 import kr.ac.jejunu.giftapplication.R;
 
-public class SelectBankActivity extends AppCompatActivity {
+public class MyInvestMentActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.select_bank_activity);
+        setContentView(R.layout.my_invest_ment_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, SelectBankFragment.newInstance())
+                    .replace(R.id.container, MyInvestMentFragment.newInstance())
                     .commitNow();
         }
     }
@@ -36,7 +36,8 @@ public class SelectBankActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.arrow_back);
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle("내 투자 목록");
     }
 
     @Override

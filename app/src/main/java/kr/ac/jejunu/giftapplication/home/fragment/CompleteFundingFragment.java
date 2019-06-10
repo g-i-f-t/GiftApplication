@@ -65,13 +65,10 @@ public class CompleteFundingFragment extends Fragment {
 
     private void transition(ImageView view, GameVO game) {
         Intent intent = new Intent(getContext(), GameDetail.class);
-        HashMap<String, Object> params = new HashMap<>();
+        intent.putExtra("gameVO", game);
         String fileName = "homeGameImage.png";
         FileIO.saveImage(view, fileName, getContext());
-
-        intent.putExtra("params", params);
         intent.putExtra("fileName", fileName);
-//        intent.putExtra("game", game);
 
         ActivityOptions options = ActivityOptions
                 .makeSceneTransitionAnimation(getActivity(), view, getResources().getString(R.string.funding_game_image));
