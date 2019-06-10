@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class IndeGameFragment extends Fragment {
     private RecyclerView recyclerView;
     private IndeGameAdapter recyclerAdapter;
     private WebView webView;
-    private Button button;
+    private ImageButton imageButton;
     private int page;
 
     public static IndeGameFragment newInstance() {
@@ -49,7 +50,7 @@ public class IndeGameFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.inde_game_fragment, container, false);
         recyclerView = view.findViewById(R.id.indegame_recycler_view);
-        button = view.findViewById(R.id.on_top_button);
+        imageButton = view.findViewById(R.id.on_top_button);
         return view;
     }
 
@@ -83,7 +84,7 @@ public class IndeGameFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(recyclerAdapter);
-        button.setOnClickListener(v -> recyclerView.smoothScrollToPosition(0));
+        imageButton.setOnClickListener(v -> recyclerView.smoothScrollToPosition(0));
     }
 
 }
