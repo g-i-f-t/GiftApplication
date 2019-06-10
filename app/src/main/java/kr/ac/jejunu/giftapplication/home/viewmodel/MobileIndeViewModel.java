@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -72,6 +73,7 @@ public class MobileIndeViewModel extends ViewModel {
                     cafeVO.setDeveloper(developer);
                     cafeVO.setDate(date);
                     cafeList.add(cafeVO);
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();

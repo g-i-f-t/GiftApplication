@@ -56,7 +56,6 @@ public class IndeGameAdapter extends RecyclerView.Adapter<IndeGameAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.textView_title.setText(indeList.get(position).getTitle());
-        holder.textView_title.setMovementMethod(LinkMovementMethod.getInstance());
         holder.total_view.setText(indeList.get(position).getTotal_view());
         holder.textView_developer.setText(indeList.get(position).getDeveloper());
         holder.textView_date.setText(indeList.get(position).getDate());
