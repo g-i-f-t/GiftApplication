@@ -12,18 +12,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import kr.ac.jejunu.giftapplication.R;
+import kr.ac.jejunu.giftapplication.home.adapter.TimeLineAdapter;
 import kr.ac.jejunu.giftapplication.home.viewmodel.TimeLineViewModel;
 
 public class TimeLineFragment extends Fragment {
 
     private TimeLineViewModel mViewModel;
-
+    private RecyclerView recyclerView;
     public static TimeLineFragment newInstance() {
         return new TimeLineFragment();
     }
@@ -31,7 +34,10 @@ public class TimeLineFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.time_line_fragment, container, false);
+        View v = inflater.inflate(R.layout.time_line_fragment, container, false);
+        recyclerView = v.findViewById(R.id.transaction_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        return v;
     }
 
     @Override
@@ -40,6 +46,11 @@ public class TimeLineFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(TimeLineViewModel.class);
         // TODO: Use the ViewModel
         setDrawerSettings();
+        setRecyclerView();
+    }
+
+    private void setRecyclerView() {
+        recyclerView.setAdapter(new TimeLineAdapter(mViewModel.getLatestTransaction()));
     }
 
     private void setDrawerSettings() {

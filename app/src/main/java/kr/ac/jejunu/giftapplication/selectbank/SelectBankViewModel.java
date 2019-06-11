@@ -96,7 +96,6 @@ public class SelectBankViewModel extends ViewModel {
                 JsonParser parser = new JsonParser();
                 JsonElement element = parser.parse(sb.toString()).getAsJsonObject().get("data");
                 bankAccountVOList = gson.fromJson(element, type);
-                System.out.println(bankAccountVOList.get(0).getBankName());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import kr.ac.jejunu.giftapplication.DownloadImageTask;
 import kr.ac.jejunu.giftapplication.R;
@@ -40,11 +41,13 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CategoryItem holder, int position) {
-        holder.getItemTitle().setText(gameList.get(position).getName());
-        new DownloadImageTask(holder.getItemImage()).execute(gameList.get(position).getProfileImage());
-        holder.getItemDeveleoper().setText(gameList.get(position).getDeveloper().getName());
-        holder.getItemPercentage().setText("30%");
-        holder.getGameItemCard().setOnClickListener(v -> callback.callback(holder.getItemImage(), gameList.get(position)));
+        GameVO gameVO = gameList.get(position);
+        holder.getItemTitle().setText(gameVO.getName());
+        new DownloadImageTask(holder.getItemImage()).execute(gameVO.getProfileImage());
+        holder.getItemDeveleoper().setText(gameVO.getDeveloper().getName());
+        double percentage = ((double) gameVO.getCurrentPrice() / (double) gameVO.getGoalPrice()) * 100;
+        holder.getItemPercentage().setText(String.format(Locale.getDefault(), "%.0f%%", percentage));
+        holder.getGameItemCard().setOnClickListener(v -> callback.callback(holder.getItemImage(), gameVO));
     }
 
     @Override
